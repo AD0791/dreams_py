@@ -60,7 +60,7 @@ def agywPeriods(months):
     if months <= 6:
         return "0-6 months"
     elif months>=7 and months<=12:
-        return "7-12 months"
+        return "07-12 months"
     elif months>=13 and months<=24:
         return "13-24 months"
     else:
