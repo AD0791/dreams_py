@@ -109,80 +109,81 @@ FROM
     gardening_beneficiary gb ON gb.code_dreams = p.patient_code
 GROUP BY dm.id_patient
 '''
-dreams_mastersheet = pd.read_sql_query(query,engine,parse_dates=True)
+DREAMS_MASTERSHEET = pd.read_sql_query(query,engine,parse_dates=True)
 # close the pool of connection
 engine.dispose()
 # turn to integer
-dreams_mastersheet.age = dreams_mastersheet.age.fillna(-1000)
-dreams_mastersheet.age = dreams_mastersheet.age.astype(int16)
+DREAMS_MASTERSHEET.age = DREAMS_MASTERSHEET.age.fillna(-1000)
+DREAMS_MASTERSHEET.age = DREAMS_MASTERSHEET.age.astype(int16)
 
-dreams_mastersheet['age_range'] = dreams_mastersheet.age.map(tranche_age_classique)
-dreams_mastersheet['newage_range'] = dreams_mastersheet.age.map(tranche_age_mineur_majeur)
-
-
-dreams_mastersheet["date_entevyou"] = pd.to_datetime( dreams_mastersheet.a1_dat_entvyou_a_ft_jjmmaa_egz_010817)
-
-dreams_mastersheet["fiscal_year"] = dreams_mastersheet.date_entevyou.map(fiscalYear21)
-dreams_mastersheet["timeOn_system"] = dreams_mastersheet.date_entevyou.map(validTimeOnSystem)
-dreams_mastersheet["months_now_dateEntevyou"] = dreams_mastersheet.date_entevyou.map(between_now_date_entevyou)
-dreams_mastersheet["agyw_period_range"] = dreams_mastersheet.months_now_dateEntevyou.map(agywPeriods)
-
-dreams_mastersheet.number_of_different_topic = dreams_mastersheet.number_of_different_topic.fillna(-1000)
-dreams_mastersheet.number_of_different_topic = dreams_mastersheet.number_of_different_topic.astype(int16)
+DREAMS_MASTERSHEET['age_range'] = DREAMS_MASTERSHEET.age.map(tranche_age_classique)
+DREAMS_MASTERSHEET['newage_range'] = DREAMS_MASTERSHEET.age.map(tranche_age_mineur_majeur)
 
 
-dreams_mastersheet['curriculum_servis_auMoins_1fois'] = dreams_mastersheet.number_of_different_topic.map(curriculum_atLeastOneService)
-dreams_mastersheet['curriculum'] = dreams_mastersheet.number_of_different_topic.map(status_curriculum)
+DREAMS_MASTERSHEET["date_entevyou"] = pd.to_datetime( DREAMS_MASTERSHEET.a1_dat_entvyou_a_ft_jjmmaa_egz_010817)
+
+DREAMS_MASTERSHEET["fiscal_year"] = DREAMS_MASTERSHEET.date_entevyou.map(fiscalYear21)
+DREAMS_MASTERSHEET["timeOn_system"] = DREAMS_MASTERSHEET.date_entevyou.map(validTimeOnSystem)
+DREAMS_MASTERSHEET["months_now_dateEntevyou"] = DREAMS_MASTERSHEET.date_entevyou.map(between_now_date_entevyou)
+DREAMS_MASTERSHEET["agyw_period_range"] = DREAMS_MASTERSHEET.months_now_dateEntevyou.map(agywPeriods)
+
+DREAMS_MASTERSHEET.number_of_different_topic = DREAMS_MASTERSHEET.number_of_different_topic.fillna(-1000)
+DREAMS_MASTERSHEET.number_of_different_topic = DREAMS_MASTERSHEET.number_of_different_topic.astype(int16)
 
 
-dreams_mastersheet.first_session_date = dreams_mastersheet.first_session_date.fillna('0000-00-00')
-dreams_mastersheet.last_session_date = dreams_mastersheet.last_session_date.fillna('0000-00-00')
+DREAMS_MASTERSHEET['curriculum_servis_auMoins_1fois'] = DREAMS_MASTERSHEET.number_of_different_topic.map(curriculum_atLeastOneService)
+DREAMS_MASTERSHEET['curriculum'] = DREAMS_MASTERSHEET.number_of_different_topic.map(status_curriculum)
 
-dreams_mastersheet["curriculum_date_debut"] = pd.to_datetime( dreams_mastersheet.first_session_date,errors='coerce')
-dreams_mastersheet["curriculum_date_end"] = pd.to_datetime( dreams_mastersheet.last_session_date,errors='coerce')
+DREAMS_MASTERSHEET["dreams_curriculum"] = DREAMS_MASTERSHEET.curriculum.map(curriculum_condense)
 
-dreams_mastersheet['curriculum_date_debut_fy'] = dreams_mastersheet.curriculum_date_debut.map(id_quarter_services)
-dreams_mastersheet['curriculum_date_end_fy'] = dreams_mastersheet.curriculum_date_end.map(id_quarter_services)
+DREAMS_MASTERSHEET.first_session_date = DREAMS_MASTERSHEET.first_session_date.fillna('0000-00-00')
+DREAMS_MASTERSHEET.last_session_date = DREAMS_MASTERSHEET.last_session_date.fillna('0000-00-00')
 
+DREAMS_MASTERSHEET["curriculum_date_debut"] = pd.to_datetime( DREAMS_MASTERSHEET.first_session_date,errors='coerce')
+DREAMS_MASTERSHEET["curriculum_date_end"] = pd.to_datetime( DREAMS_MASTERSHEET.last_session_date,errors='coerce')
 
-
-
-dreams_mastersheet.last_hiv_test_date = dreams_mastersheet.last_hiv_test_date.fillna('0000-00-00')
-dreams_mastersheet["hts_date"] = pd.to_datetime( dreams_mastersheet.last_hiv_test_date,errors='coerce')
-
-dreams_mastersheet.last_condoms_reception_date = dreams_mastersheet.last_condoms_reception_date.fillna('0000-00-00')
-dreams_mastersheet['condoms_date'] = pd.to_datetime(dreams_mastersheet.last_condoms_reception_date,errors='coerce')
-
-dreams_mastersheet.last_vbg_treatment_date = dreams_mastersheet.last_vbg_treatment_date.fillna('0000-00-00')
-dreams_mastersheet['vbg_date'] = pd.to_datetime(dreams_mastersheet.last_vbg_treatment_date,errors='coerce')
-
-dreams_mastersheet.last_gynecological_care_date = dreams_mastersheet.last_gynecological_care_date.fillna('0000-00-00')
-dreams_mastersheet['gyneco_date'] = pd.to_datetime(dreams_mastersheet.last_gynecological_care_date,errors='coerce')
+DREAMS_MASTERSHEET['curriculum_date_debut_fy'] = DREAMS_MASTERSHEET.curriculum_date_debut.map(id_quarter_services)
+DREAMS_MASTERSHEET['curriculum_date_end_fy'] = DREAMS_MASTERSHEET.curriculum_date_end.map(id_quarter_services)
 
 
-dreams_mastersheet['hts'] = dreams_mastersheet.hts_date.map(hcvg_valid_services)
-dreams_mastersheet['condoms'] = dreams_mastersheet.condoms_date.map(hcvg_valid_services)
-dreams_mastersheet['vbg'] = dreams_mastersheet.vbg_date.map(hcvg_valid_services)
-dreams_mastersheet['gyneco'] = dreams_mastersheet.gyneco_date.map(hcvg_valid_services)
-
-dreams_mastersheet['hts_fy'] = dreams_mastersheet.hts_date.map(id_quarter_services)
-dreams_mastersheet['condoms_fy'] = dreams_mastersheet.condoms_date.map(id_quarter_services)
-dreams_mastersheet['vbg_fy'] = dreams_mastersheet.vbg_date.map(id_quarter_services)
-dreams_mastersheet['gyneco_fy'] = dreams_mastersheet.gyneco_date.map(id_quarter_services)
-
-dreams_mastersheet['post_care_treatment'] = dreams_mastersheet.apply(lambda df: post_care_app(df),axis=1)
-
-dreams_mastersheet['socio_eco_app'] = dreams_mastersheet.apply(lambda df: socioEco_app(df),axis=1)
 
 
-dreams_mastersheet['recevoir_1services'] = dreams_mastersheet.apply(lambda df: unServiceDreams(df),axis=1)
+DREAMS_MASTERSHEET.last_hiv_test_date = DREAMS_MASTERSHEET.last_hiv_test_date.fillna('0000-00-00')
+DREAMS_MASTERSHEET["hts_date"] = pd.to_datetime( DREAMS_MASTERSHEET.last_hiv_test_date,errors='coerce')
+
+DREAMS_MASTERSHEET.last_condoms_reception_date = DREAMS_MASTERSHEET.last_condoms_reception_date.fillna('0000-00-00')
+DREAMS_MASTERSHEET['condoms_date'] = pd.to_datetime(DREAMS_MASTERSHEET.last_condoms_reception_date,errors='coerce')
+
+DREAMS_MASTERSHEET.last_vbg_treatment_date = DREAMS_MASTERSHEET.last_vbg_treatment_date.fillna('0000-00-00')
+DREAMS_MASTERSHEET['vbg_date'] = pd.to_datetime(DREAMS_MASTERSHEET.last_vbg_treatment_date,errors='coerce')
+
+DREAMS_MASTERSHEET.last_gynecological_care_date = DREAMS_MASTERSHEET.last_gynecological_care_date.fillna('0000-00-00')
+DREAMS_MASTERSHEET['gyneco_date'] = pd.to_datetime(DREAMS_MASTERSHEET.last_gynecological_care_date,errors='coerce')
 
 
-dreams_mastersheet['ps_10_14'] = dreams_mastersheet.apply(lambda df: service_primaire_10_14(df),axis=1)
-dreams_mastersheet['ps_15_19'] = dreams_mastersheet.apply(lambda df: service_primaire_15_19(df), axis=1)
-dreams_mastersheet['ps_20_24'] = dreams_mastersheet.apply(lambda df: service_primaire_20_24(df), axis=1)
+DREAMS_MASTERSHEET['hts'] = DREAMS_MASTERSHEET.hts_date.map(hcvg_valid_services)
+DREAMS_MASTERSHEET['condoms'] = DREAMS_MASTERSHEET.condoms_date.map(hcvg_valid_services)
+DREAMS_MASTERSHEET['vbg'] = DREAMS_MASTERSHEET.vbg_date.map(hcvg_valid_services)
+DREAMS_MASTERSHEET['gyneco'] = DREAMS_MASTERSHEET.gyneco_date.map(hcvg_valid_services)
 
-dreams_mastersheet['score_eligible_AGYW'] = dreams_mastersheet.total.map(isAGYW)
+DREAMS_MASTERSHEET['hts_fy'] = DREAMS_MASTERSHEET.hts_date.map(id_quarter_services)
+DREAMS_MASTERSHEET['condoms_fy'] = DREAMS_MASTERSHEET.condoms_date.map(id_quarter_services)
+DREAMS_MASTERSHEET['vbg_fy'] = DREAMS_MASTERSHEET.vbg_date.map(id_quarter_services)
+DREAMS_MASTERSHEET['gyneco_fy'] = DREAMS_MASTERSHEET.gyneco_date.map(id_quarter_services)
+
+DREAMS_MASTERSHEET['post_care_treatment'] = DREAMS_MASTERSHEET.apply(lambda df: post_care_app(df),axis=1)
+
+DREAMS_MASTERSHEET['socio_eco_app'] = DREAMS_MASTERSHEET.apply(lambda df: socioEco_app(df),axis=1)
+
+
+DREAMS_MASTERSHEET['recevoir_1services'] = DREAMS_MASTERSHEET.apply(lambda df: unServiceDreams(df),axis=1)
+
+
+DREAMS_MASTERSHEET['ps_10_14'] = DREAMS_MASTERSHEET.apply(lambda df: service_primaire_10_14(df),axis=1)
+DREAMS_MASTERSHEET['ps_15_19'] = DREAMS_MASTERSHEET.apply(lambda df: service_primaire_15_19(df), axis=1)
+DREAMS_MASTERSHEET['ps_20_24'] = DREAMS_MASTERSHEET.apply(lambda df: service_primaire_20_24(df), axis=1)
+
+DREAMS_MASTERSHEET['score_eligible_AGYW'] = DREAMS_MASTERSHEET.total.map(isAGYW)
 
 
 

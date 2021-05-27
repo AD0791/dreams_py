@@ -78,6 +78,8 @@ def status_curriculum(topics):
     else:
         return "non-recu"
 
+def curriculum_condense(curriculum):
+    return "curriculum_completed" if curriculum == "curriculum complet" else "curriculum_inc"
 
 def id_quarter_services(date):
     if type(date) == type(NaT):
