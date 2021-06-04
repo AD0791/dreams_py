@@ -42,7 +42,11 @@ class AgywPrev:
         self.__agyw_prevIII_total = self.__agyw_prevIII.code.count()
         self.__total_datim = self.__agyw_prevI_total + self.__agyw_prevII_total + self.__agyw_prevIII_total
         
-        
+
+    @property
+    def mastersheet_dataframe(self):
+        return self.__data
+
     @property
     def who_am_i(self):
         return self.__i_am
