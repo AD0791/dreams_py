@@ -1,4 +1,5 @@
 from layeringOfServices import DREAMS_MASTERSHEET
+from pandas import DataFrame
 
 class AgywPrev:
     """A class with properties and methods given the results of the indicator AGYW_PREV DATIM""" 
@@ -106,22 +107,22 @@ class AgywPrev:
 
 
     def datim_agyw_prevI(self):
-        agyw_prevI_pivot = self.__agyw_prevI.pivot_table(index="age_range",columns="agyw_period_range", values="code",aggfunc="count",fill_value=0,margins=True,margins_name="Total").reset_index().rename_axis(None,1)
-        agyw_prevI_pivot.rename_axis(index={"age_range":"Age"},columns={"agyw_period_range":"Time"},inplace=True)
-        agyw_prevI_pivot_final = agyw_prevI_pivot[:-1]
-        return agyw_prevI_pivot_final
+        pivotableI = self.__agyw_prevI.rename(columns={"age_range":"Age", "agyw_period_range":"Time"})
+        agyw_prevI_pivot = pivotableI.pivot_table(index="Age",columns="Time", values="code",aggfunc="count",fill_value=0,margins=True,margins_name="Total")
+        agyw_prevI_pivot_final = agyw_prevI_pivot.reset_index().rename_axis(None, axis=1)[:-1]
+        return DataFrame( agyw_prevI_pivot_final.to_records(index=True))
     
     def datim_agyw_prevII(self):
-        agyw_prevII_pivot = self.__agyw_prevII.pivot_table(index="age_range",columns="agyw_period_range", values="code",aggfunc="count",fill_value=0,margins=True,margins_name="Total").reset_index().rename_axis(None,1)
-        agyw_prevII_pivot.rename_axis(index={"age_range":"Age"},columns={"agyw_period_range":"Time"},inplace=True)
-        agyw_prevII_pivot_final = agyw_prevII_pivot[:-1]
-        return agyw_prevII_pivot_final
+        pivotableII = self.__agyw_prevII.rename(columns={"age_range":"Age", "agyw_period_range":"Time"})
+        agyw_prevII_pivot = pivotableII.pivot_table(index="Age",columns="Time", values="code",aggfunc="count",fill_value=0,margins=True,margins_name="Total")
+        agyw_prevII_pivot_final = agyw_prevII_pivot.reset_index().rename_axis(None, axis=1)[:-1]
+        return DataFrame( agyw_prevII_pivot_final.to_records(index=True))
     
     def datim_agyw_prevIII(self):
-        agyw_prevIII_pivot = self.__agyw_prevIII.pivot_table(index="age_range",columns="agyw_period_range", values="code",aggfunc="count",fill_value=0,margins=True,margins_name="Total").reset_index().rename_axis(None,1)
-        agyw_prevIII_pivot.rename_axis(index={"age_range":"Age"},columns={"agyw_period_range":"Time"},inplace=True)
-        agyw_prevIII_pivot_final = agyw_prevIII_pivot[:-1]
-        return agyw_prevIII_pivot_final
+        pivotableIII = self.__agyw_prevIII.rename(columns={"age_range":"Age", "agyw_period_range":"Time"})
+        agyw_prevIII_pivot = pivotableIII.pivot_table(index="Age",columns="Time", values="code",aggfunc="count",fill_value=0,margins=True,margins_name="Total")
+        agyw_prevIII_pivot_final = agyw_prevIII_pivot.reset_index().rename_axis(None, axis=1)[:-1]
+        return DataFrame( agyw_prevIII_pivot_final.to_records(index=True))
 
 
 
