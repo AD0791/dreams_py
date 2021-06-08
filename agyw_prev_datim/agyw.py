@@ -110,19 +110,19 @@ class AgywPrev:
         pivotableI = self.__agyw_prevI.rename(columns={"age_range":"Age", "agyw_period_range":"Time"})
         agyw_prevI_pivot = pivotableI.pivot_table(index="Age",columns="Time", values="code",aggfunc="count",fill_value=0,margins=True,margins_name="Total")
         agyw_prevI_pivot_final = agyw_prevI_pivot.reset_index().rename_axis(None, axis=1)[:-1]
-        return DataFrame( agyw_prevI_pivot_final.to_records(index=True))
+        return DataFrame( agyw_prevI_pivot_final.to_records(index=False))
     
     def datim_agyw_prevII(self):
         pivotableII = self.__agyw_prevII.rename(columns={"age_range":"Age", "agyw_period_range":"Time"})
         agyw_prevII_pivot = pivotableII.pivot_table(index="Age",columns="Time", values="code",aggfunc="count",fill_value=0,margins=True,margins_name="Total")
         agyw_prevII_pivot_final = agyw_prevII_pivot.reset_index().rename_axis(None, axis=1)[:-1]
-        return DataFrame( agyw_prevII_pivot_final.to_records(index=True))
+        return DataFrame( agyw_prevII_pivot_final.to_records(index=False))
     
     def datim_agyw_prevIII(self):
         pivotableIII = self.__agyw_prevIII.rename(columns={"age_range":"Age", "agyw_period_range":"Time"})
         agyw_prevIII_pivot = pivotableIII.pivot_table(index="Age",columns="Time", values="code",aggfunc="count",fill_value=0,margins=True,margins_name="Total")
         agyw_prevIII_pivot_final = agyw_prevIII_pivot.reset_index().rename_axis(None, axis=1)[:-1]
-        return DataFrame( agyw_prevIII_pivot_final.to_records(index=True))
+        return DataFrame( agyw_prevIII_pivot_final.to_records(index=False))
 
 
 
