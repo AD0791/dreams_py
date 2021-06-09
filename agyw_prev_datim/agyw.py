@@ -8,6 +8,11 @@ class AgywPrev:
     __datim2_title="Number of individual AGYW that have fully completed the entire DREAMS primary package of services AND at least one additional secondary service."
     __datim3_title="Number of individual AGYW that have fully completed at least one DREAMS primary package of services but not the full primary package of services."
     
+    def __repr__(self):
+        return f"<AgywPrev {self.__i_am}>"
+    
+    def __str__(self):
+        return f"<AgywPrev {self.__i_am}>"
     
     @classmethod
     def datim_titleI(cls):
@@ -43,16 +48,15 @@ class AgywPrev:
         self.__agyw_prevIII_total = self.__agyw_prevIII.code.count()
         self.__total_datim = self.__agyw_prevI_total + self.__agyw_prevII_total + self.__agyw_prevIII_total
         
-
-    @property
-    def mastersheet_dataframe(self):
-        return self.__data
-
+        
     @property
     def who_am_i(self):
         return self.__i_am
     
-    
+    @property
+    def mastersheet_dataframe(self):
+        return self.__data
+
     @property
     def total_mastersheet(self):
         return self.__total_mastersheet
@@ -107,23 +111,49 @@ class AgywPrev:
 
 
     def datim_agyw_prevI(self):
-        pivotableI = self.__agyw_prevI.rename(columns={"age_range":"Age", "agyw_period_range":"Time"})
-        agyw_prevI_pivot = pivotableI.pivot_table(index="Age",columns="Time", values="code",aggfunc="count",fill_value=0,margins=True,margins_name="Total")
-        agyw_prevI_pivot_final = agyw_prevI_pivot.reset_index().rename_axis(None, axis=1)[:-1]
-        return DataFrame( agyw_prevI_pivot_final.to_records(index=False))
+        try:
+            pivotableI = self.__agyw_prevI.rename(columns={"age_range":"Age", "agyw_period_range":"Time"})
+            agyw_prevI_pivot = pivotableI.pivot_table(index="Age",columns="Time", values="code",aggfunc="count",fill_value=0,margins=True,margins_name="Total")
+            agyw_prevI_pivot_final = agyw_prevI_pivot.reset_index().rename_axis(None, axis=1)[:-1]
+            agyw_prevI_results_final = DataFrame( agyw_prevI_pivot_final.to_records(index=False))
+        except ValueError:
+            agyw_prevI_results_final = DataFrame({"Age":["10-14",                     "15-19",
+                "20-24"],
+                "0-6 months":[0,0,0],
+                "07-12 months":[0,0,0],
+                "13-24 months":[0,0,0]
+            })
+        return agyw_prevI_results_final
     
     def datim_agyw_prevII(self):
-        pivotableII = self.__agyw_prevII.rename(columns={"age_range":"Age", "agyw_period_range":"Time"})
-        agyw_prevII_pivot = pivotableII.pivot_table(index="Age",columns="Time", values="code",aggfunc="count",fill_value=0,margins=True,margins_name="Total")
-        agyw_prevII_pivot_final = agyw_prevII_pivot.reset_index().rename_axis(None, axis=1)[:-1]
-        return DataFrame( agyw_prevII_pivot_final.to_records(index=False))
+        try:
+            pivotableII = self.__agyw_prevII.rename(columns={"age_range":"Age", "agyw_period_range":"Time"})
+            agyw_prevII_pivot = pivotableII.pivot_table(index="Age",columns="Time", values="code",aggfunc="count",fill_value=0,margins=True,margins_name="Total")
+            agyw_prevII_pivot_final = agyw_prevII_pivot.reset_index().rename_axis(None, axis=1)[:-1]
+            agyw_prevII_results_final = DataFrame( agyw_prevII_pivot_final.to_records(index=False))
+        except ValueError:
+            agyw_prevII_results_final = DataFrame({"Age":["10-14",                     "15-19",
+                "20-24"],
+                "0-6 months":[0,0,0],
+                "07-12 months":[0,0,0],
+                "13-24 months":[0,0,0]
+            })
+        return agyw_prevII_results_final
     
     def datim_agyw_prevIII(self):
-        pivotableIII = self.__agyw_prevIII.rename(columns={"age_range":"Age", "agyw_period_range":"Time"})
-        agyw_prevIII_pivot = pivotableIII.pivot_table(index="Age",columns="Time", values="code",aggfunc="count",fill_value=0,margins=True,margins_name="Total")
-        agyw_prevIII_pivot_final = agyw_prevIII_pivot.reset_index().rename_axis(None, axis=1)[:-1]
-        return DataFrame( agyw_prevIII_pivot_final.to_records(index=False))
-
+        try:
+            pivotableIII = self.__agyw_prevIII.rename(columns={"age_range":"Age", "agyw_period_range":"Time"})
+            agyw_prevIII_pivot = pivotableIII.pivot_table(index="Age",columns="Time", values="code",aggfunc="count",fill_value=0,margins=True,margins_name="Total")
+            agyw_prevIII_pivot_final = agyw_prevIII_pivot.reset_index().rename_axis(None, axis=1)[:-1]
+            agyw_prevIII_results_final = DataFrame( agyw_prevIII_pivot_final.to_records(index=False))
+        except ValueError:
+            agyw_prevIII_results_final = DataFrame({"Age":["10-14",                     "15-19",
+                "20-24"],
+                "0-6 months":[0,0,0],
+                "07-12 months":[0,0,0],
+                "13-24 months":[0,0,0]
+            })
+        return agyw_prevIII_results_final
 
 
 class AgywPrevCommune(AgywPrev):
@@ -138,3 +168,9 @@ class AgywPrevCommune(AgywPrev):
     @property
     def who_am_i(self):
         return self.__i_am
+    
+    def __repr__(self):
+        return f"<AgywPrevCommune {self.__i_am}>"
+    
+    def __str__(self):
+        return f"<AgywPrevCommune {self.__i_am}>"
