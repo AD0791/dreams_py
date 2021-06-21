@@ -45,8 +45,8 @@ def init_datim():
 # Active the workbook 
 def active_worksheet():
     """This function will be responsible """
-    init_wb()
-    init_datim()
+    wb = init_wb
+    datim = init_datim
     ws = wb.active
     ws.title = datim.who_am_i
     return ws
