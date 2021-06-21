@@ -126,7 +126,7 @@ def post_care_app(df):
 
 
 def socioEco_app(df):
-    return 'service_muso_gardening' if (df.is_muso=='yes') or (df.is_gardening=='yes') else 'no'
+    return 'service_muso_gardening' if (df.is_muso == 'yes') or (df.is_gardening == 'yes') else 'no'
 
 
 def unServiceDreams(df):
