@@ -24,8 +24,8 @@ thin_border = Border(left=Side(style='thin'),
 
 # Name Handler
 def name_handler(s):
+    """This function will Replace all runs of whitespace with a single dash"""
     s = sub(r"[^\w\s]", '', s)
-    # Replace all runs of whitespace with a single dash
     s = sub(r"\s+", '-', s)
     return s
 
@@ -34,8 +34,28 @@ def name_handler(s):
 def init_wb():
     """This function will be responsible for initiate the workbook"""
     wb = Workbook()
-    return 
+    return wb
+
+# init the datim
+def init_datim():
+    """This function will be responsible for initiate the datim instance"""
+    datim = AgywPrev()
+    return datim
+
+# Active the workbook 
+def active_worksheet():
+    """This function will be responsible """
+    init_wb()
+    init_datim()
+    ws = wb.active
+    ws.title = datim.who_am_i
+    return ws
+
+# Active 
 
 
 
-
+if __name__ == "__main__":
+    init_wb()
+    init_datim()
+    active_worksheet()
