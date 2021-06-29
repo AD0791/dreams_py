@@ -147,3 +147,6 @@ def service_primaire_20_24(df):
 def isAGYW(total):
     return 'eligible' if total>=14 else 'no_eligible'
 
+
+def new_service_primaire_20_24(df):
+    return 'condoms&curriculum' if (df.curriculum=="curriculum complet" and df.condoms=='tested_on_given_date' and df.age_range == "20-24") else 'no'

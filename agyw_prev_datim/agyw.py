@@ -70,7 +70,8 @@ class AgywPrev:
             return "full_primary_only"
         elif (df.ps_15_19 == "condoms&curriculum" and df.hts == "errata"  and df.post_care_treatment == "no" and df.socio_eco_app == "no" ):
             return "full_primary_only"
-        elif (df.ps_20_24 == "condoms&hts&curriculum" and df.post_care_treatment == "no" and df.socio_eco_app == "no" ):
+        #elif (df.ps_20_24 == "condoms&hts&curriculum"  and df.post_care_treatment == "no" and df.socio_eco_app == "no" ):
+        elif (df.ps_20_24 == "condoms&curriculum" and df.hts == "errata" and df.post_care_treatment == "no" and df.socio_eco_app == "no" ):
             return "full_primary_only"
         else:
             return "invalid"
@@ -80,7 +81,8 @@ class AgywPrev:
             return "full_primary_leastOneSecondary"
         elif (df.ps_15_19 == "condoms&curriculum") and (df.hts == "tested_on_given_date" or df.post_care_treatment == "service_gyneco_vbg" or df.socio_eco_app == "service_muso_gardening" ):
             return "full_primary_leastOneSecondary"
-        elif (df.ps_20_24 == "condoms&hts&curriculum") and (df.post_care_treatment == "service_gyneco_vbg" or df.socio_eco_app == "service_muso_gardening" ):
+        #elif (df.ps_20_24 == "condoms&hts&curriculum") and (df.post_care_treatment == "service_gyneco_vbg" or df.socio_eco_app == "service_muso_gardening" ):
+        elif (df.ps_20_24 == "condoms&curriculum") and (df.hts == "tested_on_given_date" or df.post_care_treatment == "service_gyneco_vbg" or df.socio_eco_app == "service_muso_gardening" ):
             return "full_primary_leastOneSecondary"
         else:
             return "invalid"
@@ -88,7 +90,8 @@ class AgywPrev:
     def __primPartFunc(self,df):
         if (df.age_range == "15-19") and ((df.condoms == "tested_on_given_date" and df.dreams_curriculum == "curriculum_inc") or (df.condoms == "errata" and df.dreams_curriculum == "curriculum_completed")):
             return "primary_part_services"
-        elif (df.age_range == "20-24") and ((df.dreams_curriculum == "curriculum_completed" and df.condoms=="errata" and df.hts=="errata")or(df.dreams_curriculum == "curriculum_completed" and df.condoms=="tested_on_given_date" and df.hts=="errata")or(df.dreams_curriculum == "curriculum_completed" and df.condoms=="errata" and df.hts=="tested_on_given_date")or(df.dreams_curriculum == "curriculum_inc" and df.condoms=="tested_on_given_date" and df.hts=="errata")or(df.dreams_curriculum == "curriculum_inc" and df.condoms=="errata" and df.hts=="tested_on_given_date")or(df.dreams_curriculum == "curriculum_inc" and df.condoms=="tested_on_given_date" and df.hts=="tested_on_given_date")):
+        #elif (df.age_range == "20-24") and ((df.dreams_curriculum == "curriculum_completed" and df.condoms=="errata" and df.hts=="errata")or(df.dreams_curriculum == "curriculum_completed" and df.condoms=="tested_on_given_date" and df.hts=="errata")or(df.dreams_curriculum == "curriculum_completed" and df.condoms=="errata" and df.hts=="tested_on_given_date")or(df.dreams_curriculum == "curriculum_inc" and df.condoms=="tested_on_given_date" and df.hts=="errata")or(df.dreams_curriculum == "curriculum_inc" and df.condoms=="errata" and df.hts=="tested_on_given_date")or(df.dreams_curriculum == "curriculum_inc" and df.condoms=="tested_on_given_date" and df.hts=="tested_on_given_date")):
+        elif (df.age_range == "20-24") and ((df.condoms == "tested_on_given_date" and df.dreams_curriculum == "curriculum_inc") or (df.condoms == "errata" and df.dreams_curriculum == "curriculum_completed")):
             return "primary_part_services"
         else:
             return "invalid"
@@ -202,7 +205,6 @@ class AgywPrev:
                 "Total":[0,0,0]
             })
         return agyw_prevIII_results_final
-
 
 
 class AgywPrevCommune(AgywPrev):

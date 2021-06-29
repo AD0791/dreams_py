@@ -181,7 +181,7 @@ DREAMS_MASTERSHEET['recevoir_1services'] = DREAMS_MASTERSHEET.apply(lambda df: u
 
 DREAMS_MASTERSHEET['ps_10_14'] = DREAMS_MASTERSHEET.apply(lambda df: service_primaire_10_14(df),axis=1)
 DREAMS_MASTERSHEET['ps_15_19'] = DREAMS_MASTERSHEET.apply(lambda df: service_primaire_15_19(df), axis=1)
-DREAMS_MASTERSHEET['ps_20_24'] = DREAMS_MASTERSHEET.apply(lambda df: service_primaire_20_24(df), axis=1)
+DREAMS_MASTERSHEET['ps_20_24'] = DREAMS_MASTERSHEET.apply(lambda df: new_service_primaire_20_24(df), axis=1)
 
 DREAMS_MASTERSHEET['score_eligible_AGYW'] = DREAMS_MASTERSHEET.total.map(isAGYW)
 
