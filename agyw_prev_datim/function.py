@@ -67,13 +67,13 @@ def agywPeriods(months):
         return "25+ months"
 
 def curriculum_atLeastOneService(topics):
-    return "servis_auMoins_1fois" if topics>=1 and topics<=18 else "zero_services_curriculum"
+    return "servis_auMoins_1fois" if topics>=1 and topics<=19 else "zero_services_curriculum" #topics<=18
 
 
 def status_curriculum(topics):
     if topics>=1 and topics<=13:
         return "curriculum incomplet"
-    elif topics>=14 and topics<=18:
+    elif topics>=14 and topics<=19: #topics<=18
         return "curriculum complet"
     else:
         return "non-recu"
