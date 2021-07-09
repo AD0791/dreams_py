@@ -38,7 +38,7 @@ def fiscalYear21(date):
     elif date.year == 2021 and date.month>=7 and date.month<=9:
         return "FY21Q4"
     else:
-        return "not_valid_fy"
+        return "Q3fy20-Q4fy20"
     
 
     
