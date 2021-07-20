@@ -54,8 +54,12 @@ class AgywPrev:
         return self.__i_am
     
     @property
-    def mastersheet_dataframe(self):
+    def data_mastersheet(self):
         return self.__data
+    
+    @property
+    def data_dreams_valid(self):
+        return self.__dreams_valid
 
     @property
     def total_mastersheet(self):
