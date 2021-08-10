@@ -3,29 +3,45 @@ from pandas import NaT
 
 # tranche d'age classique pr les services agyw
 # tranche age mineur majeur pour les services agyw
+# ovc age
 def tranche_age_classique(age):
-        if age>=10 and age<=14:
-            return "10-14"
-        elif age>=15 and age<=19:
-            return "15-19"
-        elif age>=20 and age<=24:
-            return "20-24"
-        elif age>=25 and age<=29:
-            return "25-29"
-        else:
-            return "not_valid_age"
+    """age classique"""
+    if age>=10 and age<=14:
+        return "10-14"
+    elif age>=15 and age<=19:
+        return "15-19"
+    elif age>=20 and age<=24:
+        return "20-24"
+    elif age>=25 and age<=29:
+        return "25-29"
+    else:
+        return "not_valid_age"
         
 def tranche_age_mineur_majeur(age):
-        if age>=10 and age<=17:
-            return "10-17"
-        elif age>=18 and age<=19:
-            return "18-19"
-        elif age>=20 and age<=24:
-            return "20-24"
-        elif age>=25 and age<=29:
-            return "25-29"
-        else:
-            return "not_valid_age"
+    """minor and major age"""
+    if age>=10 and age<=17:
+        return "10-17"
+    elif age>=18 and age<=19:
+        return "18-19"
+    elif age>=20 and age<=24:
+        return "20-24"
+    elif age>=25 and age<=29:
+        return "25-29"
+    else:
+        return "not_valid_age"
+    
+def ovc_age(age):
+    """ovc valid age"""
+    if age>=10 and age<=17:
+        return "valid_ovc_age"
+    elif age>=18 and age<=19:
+        return "not_ovc_1819"
+    elif age>=20 and age<=24:
+        return "not_ovc_2024"
+    elif age>=25 and age<=29:
+        return "25-29"
+    else:
+        return "not_valid_age"
 
 
 def fiscalYear21(date):
