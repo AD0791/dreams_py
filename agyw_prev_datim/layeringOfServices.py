@@ -47,11 +47,19 @@ SELECT
     b.first_session_date,
     b.last_session_date,
     MAX(dhi.test_date) AS last_hiv_test_date,
+    MAX(dhi.hiv_test_awareness_date) AS last_sensibilisation_hiv_test_date,
+    GROUP_CONCAT(distinct dhi.hiv_test_acceptation, ',') hiv_test_acceptation,
     GROUP_CONCAT(DISTINCT dhi.test_result, ',') AS test_results,
     GROUP_CONCAT(DISTINCT ltlr.name, ',') AS test_results_with_label,
     MAX(dhi.condoms_reception_date) AS last_condoms_reception_date,
+    group_concat(distinct dhi.has_been_sensibilize_for_condom, ',') as sensibilisation_condom,
+    group_concat(distinct dhi.accept_condom, ',') as acceptation_condom,
     MAX(dhi.vbg_treatment_date) AS last_vbg_treatment_date,
     MAX(dhi.gynecological_care_date) AS last_gynecological_care_date,
+    MAX(dhi.prep_awareness_date) AS last_sensibilisation_prep,
+    MAX(dhi.prep_reference_date) AS last_reference_date_prep,
+    MAX(dhi.prep_initiation_date) AS last_initiation_date_prep,
+    GROUP_CONCAT(distinct dhi.prep_acceptation, ',') AS acceptation_prep,
     dg.name AS actual_group_name,
     dh.name AS actual_hub,
     lc.name AS actual_commune,
@@ -112,21 +120,25 @@ GROUP BY dm.id_patient
 DREAMS_MASTERSHEET = pd.read_sql_query(query,engine,parse_dates=True)
 # close the pool of connection
 engine.dispose()
+
 # turn to integer
 DREAMS_MASTERSHEET.age = DREAMS_MASTERSHEET.age.fillna(-1000)
 DREAMS_MASTERSHEET.age = DREAMS_MASTERSHEET.age.astype(int16)
 
 DREAMS_MASTERSHEET['age_range'] = DREAMS_MASTERSHEET.age.map(tranche_age_classique)
 DREAMS_MASTERSHEET['newage_range'] = DREAMS_MASTERSHEET.age.map(tranche_age_mineur_majeur)
+dreams_mastersheet['ovcage_range'] = dreams_mastersheet.age.map(ovc_age)
 
-
+# date entevyou
 DREAMS_MASTERSHEET["date_entevyou"] = pd.to_datetime( DREAMS_MASTERSHEET.a1_dat_entvyou_a_ft_jjmmaa_egz_010817)
 
-DREAMS_MASTERSHEET["fiscal_year"] = DREAMS_MASTERSHEET.date_entevyou.map(fiscalYear21)
-DREAMS_MASTERSHEET["timeOn_system"] = DREAMS_MASTERSHEET.date_entevyou.map(validTimeOnSystem)
-DREAMS_MASTERSHEET["months_now_dateEntevyou"] = DREAMS_MASTERSHEET.date_entevyou.map(between_now_date_entevyou)
-DREAMS_MASTERSHEET["agyw_period_range"] = DREAMS_MASTERSHEET.months_now_dateEntevyou.map(agywPeriods)
+dreams_mastersheet["id_fiscal_year"] = dreams_mastersheet.date_entevyou.map(calculation_fiscalYear21)
+dreams_mastersheet["fiscal_year"] = dreams_mastersheet.id_fiscal_year.map(fiscalYear21)
+dreams_mastersheet["timeOn_system"] = dreams_mastersheet.date_entevyou.map(validTimeOnSystem)
+dreams_mastersheet["months_now_dateEntevyou"] = dreams_mastersheet.date_entevyou.map(between_now_date_entevyou)
+dreams_mastersheet["agyw_period_range"] = dreams_mastersheet.months_now_dateEntevyou.map(agywPeriods)
 
+# curriculum
 DREAMS_MASTERSHEET.number_of_different_topic = DREAMS_MASTERSHEET.number_of_different_topic.fillna(-1000)
 DREAMS_MASTERSHEET.number_of_different_topic = DREAMS_MASTERSHEET.number_of_different_topic.astype(int16)
 
@@ -147,7 +159,7 @@ DREAMS_MASTERSHEET['curriculum_date_end_fy'] = DREAMS_MASTERSHEET.curriculum_dat
 
 
 
-
+# hts condoms vbg gyneco
 DREAMS_MASTERSHEET.last_hiv_test_date = DREAMS_MASTERSHEET.last_hiv_test_date.fillna('0000-00-00')
 DREAMS_MASTERSHEET["hts_date"] = pd.to_datetime( DREAMS_MASTERSHEET.last_hiv_test_date,errors='coerce')
 
@@ -173,16 +185,19 @@ DREAMS_MASTERSHEET['gyneco_fy'] = DREAMS_MASTERSHEET.gyneco_date.map(id_quarter_
 
 DREAMS_MASTERSHEET['post_care_treatment'] = DREAMS_MASTERSHEET.apply(lambda df: post_care_app(df),axis=1)
 
+
+# muso et gardinage
 DREAMS_MASTERSHEET['socio_eco_app'] = DREAMS_MASTERSHEET.apply(lambda df: socioEco_app(df),axis=1)
 
-
+# 1 services
 DREAMS_MASTERSHEET['recevoir_1services'] = DREAMS_MASTERSHEET.apply(lambda df: unServiceDreams(df),axis=1)
 
-
+#ps
 DREAMS_MASTERSHEET['ps_10_14'] = DREAMS_MASTERSHEET.apply(lambda df: service_primaire_10_14(df),axis=1)
 DREAMS_MASTERSHEET['ps_15_19'] = DREAMS_MASTERSHEET.apply(lambda df: service_primaire_15_19(df), axis=1)
 DREAMS_MASTERSHEET['ps_20_24'] = DREAMS_MASTERSHEET.apply(lambda df: new_service_primaire_20_24(df), axis=1)
 
+#eligibility
 DREAMS_MASTERSHEET['score_eligible_AGYW'] = DREAMS_MASTERSHEET.total.map(isAGYW)
 
 

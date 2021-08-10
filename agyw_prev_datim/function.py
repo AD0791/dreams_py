@@ -32,19 +32,17 @@ def tranche_age_mineur_majeur(age):
     
 def ovc_age(age):
     """ovc valid age"""
-    if age>=10 and age<=17:
-        return "valid_ovc_age"
-    elif age>=18 and age<=19:
-        return "not_ovc_1819"
-    elif age>=20 and age<=24:
-        return "not_ovc_2024"
-    elif age>=25 and age<=29:
-        return "25-29"
+    if age>=10 and age<=14:
+        return "10-14"
+    if age>=15 and age<=17:
+        return "15-17"
+    elif age>=18 and age<=24:
+        return "not_ovc_age"
     else:
         return "not_valid_age"
 
 
-def fiscalYear21(date):
+def calculation_fiscalYear21(date):
     if date.year == 2021 and date.month>=1 and date.month<=3:
         return "FY21Q2"
     elif date.year == 2020 and date.month>=10 and date.month<=12:
@@ -53,9 +51,18 @@ def fiscalYear21(date):
         return "FY21Q3"
     elif date.year == 2021 and date.month>=7 and date.month<=9:
         return "FY21Q4"
+    elif date.year == 2020 and date.month>=4 and date.month<=6:
+        return "FY20Q3"
+    elif date.year == 2020 and date.month>=7 and date.month<=9:
+        return "FY20Q4"
     else:
+        return "not_valid"
+
+def fiscalYear21(mod):
+    if mod == "FY20Q3" or mod == "FY20Q4":
         return "Q3fy20-Q4fy20"
-    
+    else:
+        return mod    
 
     
 
