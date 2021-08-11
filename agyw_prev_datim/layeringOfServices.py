@@ -157,9 +157,7 @@ DREAMS_MASTERSHEET["curriculum_date_end"] = pd.to_datetime( DREAMS_MASTERSHEET.l
 DREAMS_MASTERSHEET['curriculum_date_debut_fy'] = DREAMS_MASTERSHEET.curriculum_date_debut.map(id_quarter_services)
 DREAMS_MASTERSHEET['curriculum_date_end_fy'] = DREAMS_MASTERSHEET.curriculum_date_end.map(id_quarter_services)
 
-## prep
-dreams_mastersheet.acceptation_prep = dreams_mastersheet.acceptation_prep.fillna("didnt")
-dreams_mastersheet["acc_prep"] = dreams_mastersheet.acceptation_prep.map(acceptation_services)
+## prep dates
 
 dreams_mastersheet.last_sensibilisation_prep_date = dreams_mastersheet.last_sensibilisation_prep_date.fillna('0000-00-00')
 dreams_mastersheet["sens_prep_date"] = pd.to_datetime( dreams_mastersheet.last_sensibilisation_prep_date,errors='coerce')
@@ -170,9 +168,12 @@ dreams_mastersheet["ref_prep_date"] = pd.to_datetime( dreams_mastersheet.last_re
 dreams_mastersheet.last_initiation_prep_date = dreams_mastersheet.last_initiation_prep_date.fillna('0000-00-00')
 dreams_mastersheet["init_prep_date"] = pd.to_datetime( dreams_mastersheet.last_initiation_prep_date,errors='coerce')
 
-# hts condoms vbg gyneco
+# hts condoms vbg gyneco dates
 DREAMS_MASTERSHEET.last_hiv_test_date = DREAMS_MASTERSHEET.last_hiv_test_date.fillna('0000-00-00')
 DREAMS_MASTERSHEET["hts_date"] = pd.to_datetime( DREAMS_MASTERSHEET.last_hiv_test_date,errors='coerce')
+
+dreams_mastersheet.last_sensibilisation_hiv_test_date = dreams_mastersheet.last_sensibilisation_hiv_test_date.fillna('0000-00-00')
+dreams_mastersheet["sens_hts_date"] = pd.to_datetime( dreams_mastersheet.last_sensibilisation_hiv_test_date,errors='coerce')
 
 DREAMS_MASTERSHEET.last_condoms_reception_date = DREAMS_MASTERSHEET.last_condoms_reception_date.fillna('0000-00-00')
 DREAMS_MASTERSHEET['condoms_date'] = pd.to_datetime(DREAMS_MASTERSHEET.last_condoms_reception_date,errors='coerce')
@@ -184,10 +185,23 @@ DREAMS_MASTERSHEET.last_gynecological_care_date = DREAMS_MASTERSHEET.last_gyneco
 DREAMS_MASTERSHEET['gyneco_date'] = pd.to_datetime(DREAMS_MASTERSHEET.last_gynecological_care_date,errors='coerce')
 
 # services validation
-DREAMS_MASTERSHEET['hts'] = DREAMS_MASTERSHEET.hts_date.map(hcvg_valid_services)
-DREAMS_MASTERSHEET['condoms'] = DREAMS_MASTERSHEET.condoms_date.map(hcvg_valid_services)
-DREAMS_MASTERSHEET['vbg'] = DREAMS_MASTERSHEET.vbg_date.map(hcvg_valid_services)
-DREAMS_MASTERSHEET['gyneco'] = DREAMS_MASTERSHEET.gyneco_date.map(hcvg_valid_services)
+DREAMS_MASTERSHEET['hts'] = DREAMS_MASTERSHEET.hts_date.map(valid_services)
+DREAMS_MASTERSHEET['condoms'] = DREAMS_MASTERSHEET.condoms_date.map(valid_services)
+DREAMS_MASTERSHEET['vbg'] = DREAMS_MASTERSHEET.vbg_date.map(valid_services)
+DREAMS_MASTERSHEET['gyneco'] = DREAMS_MASTERSHEET.gyneco_date.map(valid_services)
+
+dreams_mastersheet.acceptation_prep = dreams_mastersheet.acceptation_prep.fillna("didnt")
+dreams_mastersheet["acc_prep"] = dreams_mastersheet.acceptation_prep.map(acceptation_services)
+
+dreams_mastersheet.acceptation_condom = dreams_mastersheet.acceptation_condom.fillna("didnt")
+dreams_mastersheet["acc_condom"] = dreams_mastersheet.acceptation_condom.map(acceptation_services)
+
+dreams_mastersheet.acceptation_hiv_test = dreams_mastersheet.acceptation_hiv_test.fillna("didnt")
+dreams_mastersheet["acc_hiv_test"] = dreams_mastersheet.acceptation_hiv_test.map(acceptation_services)
+
+dreams_mastersheet.sensibilisation_condom = dreams_mastersheet.sensibilisation_condom.fillna("didnt")
+dreams_mastersheet["sens_condom"] = dreams_mastersheet.sensibilisation_condom.map(sensibilisation_services)
+
 
 # fiscal year of the services
 DREAMS_MASTERSHEET['hts_fy'] = DREAMS_MASTERSHEET.hts_date.map(id_quarter_services)
