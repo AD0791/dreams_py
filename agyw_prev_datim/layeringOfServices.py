@@ -157,7 +157,18 @@ DREAMS_MASTERSHEET["curriculum_date_end"] = pd.to_datetime( DREAMS_MASTERSHEET.l
 DREAMS_MASTERSHEET['curriculum_date_debut_fy'] = DREAMS_MASTERSHEET.curriculum_date_debut.map(id_quarter_services)
 DREAMS_MASTERSHEET['curriculum_date_end_fy'] = DREAMS_MASTERSHEET.curriculum_date_end.map(id_quarter_services)
 
+## prep
+dreams_mastersheet.acceptation_prep = dreams_mastersheet.acceptation_prep.fillna("didnt")
+dreams_mastersheet["acc_prep"] = dreams_mastersheet.acceptation_prep.map(acceptation_services)
 
+dreams_mastersheet.last_sensibilisation_prep_date = dreams_mastersheet.last_sensibilisation_prep_date.fillna('0000-00-00')
+dreams_mastersheet["sens_prep_date"] = pd.to_datetime( dreams_mastersheet.last_sensibilisation_prep_date,errors='coerce')
+
+dreams_mastersheet.last_reference_prep_date = dreams_mastersheet.last_reference_prep_date.fillna('0000-00-00')
+dreams_mastersheet["ref_prep_date"] = pd.to_datetime( dreams_mastersheet.last_reference_prep_date,errors='coerce')
+
+dreams_mastersheet.last_initiation_prep_date = dreams_mastersheet.last_initiation_prep_date.fillna('0000-00-00')
+dreams_mastersheet["init_prep_date"] = pd.to_datetime( dreams_mastersheet.last_initiation_prep_date,errors='coerce')
 
 # hts condoms vbg gyneco
 DREAMS_MASTERSHEET.last_hiv_test_date = DREAMS_MASTERSHEET.last_hiv_test_date.fillna('0000-00-00')
@@ -172,17 +183,19 @@ DREAMS_MASTERSHEET['vbg_date'] = pd.to_datetime(DREAMS_MASTERSHEET.last_vbg_trea
 DREAMS_MASTERSHEET.last_gynecological_care_date = DREAMS_MASTERSHEET.last_gynecological_care_date.fillna('0000-00-00')
 DREAMS_MASTERSHEET['gyneco_date'] = pd.to_datetime(DREAMS_MASTERSHEET.last_gynecological_care_date,errors='coerce')
 
-
+# services validation
 DREAMS_MASTERSHEET['hts'] = DREAMS_MASTERSHEET.hts_date.map(hcvg_valid_services)
 DREAMS_MASTERSHEET['condoms'] = DREAMS_MASTERSHEET.condoms_date.map(hcvg_valid_services)
 DREAMS_MASTERSHEET['vbg'] = DREAMS_MASTERSHEET.vbg_date.map(hcvg_valid_services)
 DREAMS_MASTERSHEET['gyneco'] = DREAMS_MASTERSHEET.gyneco_date.map(hcvg_valid_services)
 
+# fiscal year of the services
 DREAMS_MASTERSHEET['hts_fy'] = DREAMS_MASTERSHEET.hts_date.map(id_quarter_services)
 DREAMS_MASTERSHEET['condoms_fy'] = DREAMS_MASTERSHEET.condoms_date.map(id_quarter_services)
 DREAMS_MASTERSHEET['vbg_fy'] = DREAMS_MASTERSHEET.vbg_date.map(id_quarter_services)
 DREAMS_MASTERSHEET['gyneco_fy'] = DREAMS_MASTERSHEET.gyneco_date.map(id_quarter_services)
 
+# postcare
 DREAMS_MASTERSHEET['post_care_treatment'] = DREAMS_MASTERSHEET.apply(lambda df: post_care_app(df),axis=1)
 
 

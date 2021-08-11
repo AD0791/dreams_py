@@ -142,6 +142,22 @@ def valid_services(date):
         return 'tested_on_given_date'
     else:
         return 'not_valid_date'
+    
+def acceptation_services(choices):
+    if choices == "0,":
+        return "refus"
+    elif choices == '0,,1,' or choices == '1,':
+        return "accept"
+    else:
+        return "not_valid"
+
+def sensibilisation_services(choices):
+    if choices == "0,":
+        return "non-sens"
+    elif choices == '0,,1,' or choices == '1,':
+        return "sens"
+    else:
+        return "not_valid"
 
 
 def post_care_app(df):
