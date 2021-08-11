@@ -135,7 +135,7 @@ def id_quarter_services(date):
         return "not_valid_fy"
 
 
-def hcvg_valid_services(date):
+def valid_services(date):
     if type(date) == type(NaT):
         return 'errata'
     elif (type(date) != type(NaT))and(date.year==2020 or date.year==2021):
