@@ -185,10 +185,14 @@ DREAMS_MASTERSHEET.last_gynecological_care_date = DREAMS_MASTERSHEET.last_gyneco
 DREAMS_MASTERSHEET['gyneco_date'] = pd.to_datetime(DREAMS_MASTERSHEET.last_gynecological_care_date,errors='coerce')
 
 # services validation
-DREAMS_MASTERSHEET['hts'] = DREAMS_MASTERSHEET.hts_date.map(valid_services)
-DREAMS_MASTERSHEET['condoms'] = DREAMS_MASTERSHEET.condoms_date.map(valid_services)
-DREAMS_MASTERSHEET['vbg'] = DREAMS_MASTERSHEET.vbg_date.map(valid_services)
-DREAMS_MASTERSHEET['gyneco'] = DREAMS_MASTERSHEET.gyneco_date.map(valid_services)
+dreams_mastersheet['hts'] = dreams_mastersheet.hts_date.map(valid_services)
+dreams_mastersheet['condoms'] = dreams_mastersheet.condoms_date.map(valid_services)
+dreams_mastersheet['vbg'] = dreams_mastersheet.vbg_date.map(valid_services)
+dreams_mastersheet['gyneco'] = dreams_mastersheet.gyneco_date.map(valid_services)
+dreams_mastersheet['init_prep'] = dreams_mastersheet.init_prep_date.map(valid_services)
+dreams_mastersheet['sens_hts'] = dreams_mastersheet.sens_hts_date.map(valid_services)
+dreams_mastersheet['ref_prep'] = dreams_mastersheet.ref_prep_date.map(valid_services)
+dreams_mastersheet['sens_prep'] = dreams_mastersheet.sens_prep_date.map(valid_services)
 
 dreams_mastersheet.acceptation_prep = dreams_mastersheet.acceptation_prep.fillna("didnt")
 dreams_mastersheet["acc_prep"] = dreams_mastersheet.acceptation_prep.map(acceptation_services)
@@ -202,16 +206,18 @@ dreams_mastersheet["acc_hiv_test"] = dreams_mastersheet.acceptation_hiv_test.map
 dreams_mastersheet.sensibilisation_condom = dreams_mastersheet.sensibilisation_condom.fillna("didnt")
 dreams_mastersheet["sens_condom"] = dreams_mastersheet.sensibilisation_condom.map(sensibilisation_services)
 
-
 # fiscal year of the services
-DREAMS_MASTERSHEET['hts_fy'] = DREAMS_MASTERSHEET.hts_date.map(id_quarter_services)
-DREAMS_MASTERSHEET['condoms_fy'] = DREAMS_MASTERSHEET.condoms_date.map(id_quarter_services)
-DREAMS_MASTERSHEET['vbg_fy'] = DREAMS_MASTERSHEET.vbg_date.map(id_quarter_services)
-DREAMS_MASTERSHEET['gyneco_fy'] = DREAMS_MASTERSHEET.gyneco_date.map(id_quarter_services)
+dreams_mastersheet['hts_fy'] = dreams_mastersheet.hts_date.map(id_quarter_services)
+dreams_mastersheet['condoms_fy'] = dreams_mastersheet.condoms_date.map(id_quarter_services)
+dreams_mastersheet['vbg_fy'] = dreams_mastersheet.vbg_date.map(id_quarter_services)
+dreams_mastersheet['gyneco_fy'] = dreams_mastersheet.gyneco_date.map(id_quarter_services)
+dreams_mastersheet['init_prep_fy'] = dreams_mastersheet.init_prep_date.map(id_quarter_services)
+dreams_mastersheet['sens_hts_fy'] = dreams_mastersheet.sens_hts_date.map(id_quarter_services)
+dreams_mastersheet['ref_prep_fy'] = dreams_mastersheet.ref_prep_date.map(id_quarter_services)
+dreams_mastersheet['sens_prep_fy'] = dreams_mastersheet.sens_prep_date.map(id_quarter_services)
 
 # postcare
 DREAMS_MASTERSHEET['post_care_treatment'] = DREAMS_MASTERSHEET.apply(lambda df: post_care_app(df),axis=1)
-
 
 # muso et gardinage
 DREAMS_MASTERSHEET['socio_eco_app'] = DREAMS_MASTERSHEET.apply(lambda df: socioEco_app(df),axis=1)
