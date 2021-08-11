@@ -171,8 +171,17 @@ def socioEco_app(df):
 def unServiceDreams(df):
      return '1_services_dreams_recus' if (df.curriculum_servis_auMoins_1fois == "servis_auMoins_1fois") or (df.condoms=='tested_on_given_date') or (df.hts=='tested_on_given_date') or (df.post_care_treatment=="service_gyneco_vbg") or (df.socio_eco_app=="service_muso_gardening") else 'no'
 
-
-
+def new_unServiceDreams(df): 
+     if (df.curriculum_servis_auMoins_1fois == "servis_auMoins_1fois") \
+          or (df.condoms=='tested_on_given_date' or df.sens_condom == "sens") \
+          or (df.hts=='tested_on_given_date') \
+          or (df.post_care_treatment=="service_gyneco_vbg") \
+          or (df.socio_eco_app=="service_muso_gardening") \
+          or (df.init_prep=="tested_on_given_date"):
+               return '1_services_dreams_recus'
+     else: 
+               return'no'
+           
 def service_primaire_10_14(df):
     return 'curriculum-servis' if (df.curriculum=="curriculum complet" and df.age_range == "10-14") else "no"
 
@@ -182,10 +191,15 @@ def service_primaire_15_19(df):
 def service_primaire_20_24(df):
     return 'condoms&hts&curriculum' if (df.curriculum=="curriculum complet" and df.condoms=='tested_on_given_date' and df.hts=='tested_on_given_date' and df.age_range == "20-24") else 'no'
 
+def new_service_primaire_20_24(df):
+    return 'condoms&curriculum' if (df.curriculum=="curriculum complet" and df.condoms=='tested_on_given_date' and df.age_range == "20-24") else 'no'
+    
+def new_service_primaire_15_19(df):
+    return 'condoms&curriculum' if (df.curriculum=="curriculum complet" and (df.condoms=='tested_on_given_date' or df.sens_condom == "sens") and df.age_range == "15-19") else 'no'
+
+def newI_service_primaire_20_24(df):
+    return 'condoms&curriculum' if (df.curriculum=="curriculum complet" and (df.condoms=='tested_on_given_date' or df.sens_condom == "sens") and df.age_range == "20-24") else 'no'
+
 
 def isAGYW(total):
     return 'eligible' if total>=14 else 'no_eligible'
-
-
-def new_service_primaire_20_24(df):
-    return 'condoms&curriculum' if (df.curriculum=="curriculum complet" and df.condoms=='tested_on_given_date' and df.age_range == "20-24") else 'no'

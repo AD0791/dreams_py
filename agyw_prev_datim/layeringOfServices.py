@@ -223,13 +223,12 @@ DREAMS_MASTERSHEET['post_care_treatment'] = DREAMS_MASTERSHEET.apply(lambda df: 
 DREAMS_MASTERSHEET['socio_eco_app'] = DREAMS_MASTERSHEET.apply(lambda df: socioEco_app(df),axis=1)
 
 # 1 services
-DREAMS_MASTERSHEET['recevoir_1services'] = DREAMS_MASTERSHEET.apply(lambda df: unServiceDreams(df),axis=1)
+dreams_mastersheet['recevoir_1services'] = dreams_mastersheet.apply(lambda df: new_unServiceDreams(df),axis=1)
 
 #ps
-DREAMS_MASTERSHEET['ps_10_14'] = DREAMS_MASTERSHEET.apply(lambda df: service_primaire_10_14(df),axis=1)
-DREAMS_MASTERSHEET['ps_15_19'] = DREAMS_MASTERSHEET.apply(lambda df: service_primaire_15_19(df), axis=1)
-DREAMS_MASTERSHEET['ps_20_24'] = DREAMS_MASTERSHEET.apply(lambda df: new_service_primaire_20_24(df), axis=1)
-
+dreams_mastersheet['ps_10_14'] = dreams_mastersheet.apply(lambda df: service_primaire_10_14(df),axis=1)
+dreams_mastersheet['ps_15_19'] = dreams_mastersheet.apply(lambda df: new_service_primaire_15_19(df), axis=1)
+dreams_mastersheet['ps_20_24'] = dreams_mastersheet.apply(lambda df: newI_service_primaire_20_24(df), axis=1)
 #eligibility
 DREAMS_MASTERSHEET['score_eligible_AGYW'] = DREAMS_MASTERSHEET.total.map(isAGYW)
 
