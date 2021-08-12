@@ -195,11 +195,15 @@ def new_service_primaire_20_24(df):
     return 'condoms&curriculum' if (df.curriculum=="curriculum complet" and df.condoms=='tested_on_given_date' and df.age_range == "20-24") else 'no'
     
 def new_service_primaire_15_19(df):
-    return 'condoms&curriculum' if (df.curriculum=="curriculum complet" and (df.condoms=='tested_on_given_date' or df.sens_condom == "sens") and df.age_range == "15-19") else 'no'
+    return 'condoms&curriculum' if (df.curriculum=="curriculum complet" and df.new_condoms=="sensOuRecu" and df.age_range == "15-19") else 'no'
+
 
 def newI_service_primaire_20_24(df):
-    return 'condoms&curriculum' if (df.curriculum=="curriculum complet" and (df.condoms=='tested_on_given_date' or df.sens_condom == "sens") and df.age_range == "20-24") else 'no'
+    return 'condoms&curriculum' if (df.curriculum=="curriculum complet" and df.new_condoms=="sensOuRecu" and df.age_range == "20-24") else 'no'
 
 
 def isAGYW(total):
     return 'eligible' if total>=14 else 'no_eligible'
+
+def condoms_services(df):
+    return "sensOuRecu" if df.condoms=='tested_on_given_date' or df.sens_condom == "sens" else "no"
