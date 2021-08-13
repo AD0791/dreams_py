@@ -173,7 +173,7 @@ def unServiceDreams(df):
 
 def new_unServiceDreams(df): 
      if (df.curriculum_servis_auMoins_1fois == "servis_auMoins_1fois") \
-          or (df.condoms=='tested_on_given_date' or df.sens_condom == "sens") \
+          or (df.new_condoms == "sensOuRecu") \
           or (df.hts=='tested_on_given_date') \
           or (df.post_care_treatment=="service_gyneco_vbg") \
           or (df.socio_eco_app=="service_muso_gardening") \
