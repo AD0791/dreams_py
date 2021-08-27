@@ -68,7 +68,7 @@ def fiscalYear21(mod):
 
 def validTimeOnSystem(date):
     #if date>= datetime.strptime("2020-04-01","%Y-%m-%d") and date<= datetime.now():
-    if date>= datetime.strptime("2020-04-01","%Y-%m-%d") and date<= datetime.strptime("2020-12-31","%Y-%m-%d"):
+    if date>= datetime.strptime("2020-01-01","%Y-%m-%d") and date<= datetime.strptime("2021-12-31","%Y-%m-%d"):
         return "required_Time_on"
     else:
         return "not_valid_time_on"
