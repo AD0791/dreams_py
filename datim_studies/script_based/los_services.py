@@ -9,6 +9,8 @@ from dotenv import load_dotenv
 import pandas as pd
 from numpy import int16
 load_dotenv()
+
+"""
 # get the environment variables needed
 USER= config('USRCaris')
 PASSWORD= config('PASSCaris')
@@ -120,6 +122,9 @@ GROUP BY dm.id_patient
 DREAMS_MASTERSHEET = pd.read_sql_query(query,engine,parse_dates=True)
 # close the pool of connection
 engine.dispose()
+"""
+
+DREAMS_MASTERSHEET = pd.read_excel('../../no_Q2_data.xlsx',parse_dates=True)
 
 DREAMS_MASTERSHEET.age = DREAMS_MASTERSHEET.age.fillna(-1000)
 DREAMS_MASTERSHEET.age = DREAMS_MASTERSHEET.age.astype(int16)
