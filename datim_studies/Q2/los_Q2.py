@@ -1,15 +1,14 @@
 #import os
 #from datetime import datetime
 #from datetime import date
-import pymysql
-from handlers_Q1 import * 
-from sqlalchemy import create_engine
-from decouple import config 
-from dotenv import load_dotenv
+#import pymysql
+from handlers_Q2 import * 
+#from sqlalchemy import create_engine
+#from decouple import config 
+#from dotenv import load_dotenv
 import pandas as pd
 from numpy import int16
-load_dotenv()
-
+#load_dotenv()
 """
 # get the environment variables needed
 USER= config('USRCaris')
@@ -124,7 +123,8 @@ DREAMS_MASTERSHEET = pd.read_sql_query(query,engine,parse_dates=True)
 engine.dispose()
 """
 
-DREAMS_MASTERSHEET = pd.read_excel('../../no_Q2_data.xlsx',parse_dates=True)
+
+DREAMS_MASTERSHEET = pd.read_excel('../static/agyw_prev.xlsx',sheet_name='DREAMS',parse_dates=True)
 
 DREAMS_MASTERSHEET.age = DREAMS_MASTERSHEET.age.fillna(-1000)
 DREAMS_MASTERSHEET.age = DREAMS_MASTERSHEET.age.astype(int16)
@@ -137,20 +137,20 @@ DREAMS_MASTERSHEET.first_session_date = DREAMS_MASTERSHEET.first_session_date.fi
 DREAMS_MASTERSHEET.last_session_date = DREAMS_MASTERSHEET.last_session_date.fillna('0000-00-00')
 DREAMS_MASTERSHEET["curriculum_date_debut"] = pd.to_datetime( DREAMS_MASTERSHEET.first_session_date,errors='coerce')
 DREAMS_MASTERSHEET["curriculum_date_end"] = pd.to_datetime( DREAMS_MASTERSHEET.last_session_date,errors='coerce')
-DREAMS_MASTERSHEET.last_sensibilisation_prep_date = DREAMS_MASTERSHEET.last_sensibilisation_prep_date.fillna('0000-00-00')
-DREAMS_MASTERSHEET["sens_prep_date"] = pd.to_datetime( DREAMS_MASTERSHEET.last_sensibilisation_prep_date,errors='coerce')
+#DREAMS_MASTERSHEET.last_sensibilisation_prep_date = DREAMS_MASTERSHEET.last_sensibilisation_prep_date.fillna('0000-00-00')
+#DREAMS_MASTERSHEET["sens_prep_date"] = pd.to_datetime( DREAMS_MASTERSHEET.last_sensibilisation_prep_date,errors='coerce')
 
-DREAMS_MASTERSHEET.last_reference_prep_date = DREAMS_MASTERSHEET.last_reference_prep_date.fillna('0000-00-00')
-DREAMS_MASTERSHEET["ref_prep_date"] = pd.to_datetime( DREAMS_MASTERSHEET.last_reference_prep_date,errors='coerce')
+#DREAMS_MASTERSHEET.last_reference_prep_date = DREAMS_MASTERSHEET.last_reference_prep_date.fillna('0000-00-00')
+#DREAMS_MASTERSHEET["ref_prep_date"] = pd.to_datetime( DREAMS_MASTERSHEET.last_reference_prep_date,errors='coerce')
 
-DREAMS_MASTERSHEET.last_initiation_prep_date = DREAMS_MASTERSHEET.last_initiation_prep_date.fillna('0000-00-00')
-DREAMS_MASTERSHEET["init_prep_date"] = pd.to_datetime( DREAMS_MASTERSHEET.last_initiation_prep_date,errors='coerce')
+#DREAMS_MASTERSHEET.last_initiation_prep_date = DREAMS_MASTERSHEET.last_initiation_prep_date.fillna('0000-00-00')
+#DREAMS_MASTERSHEET["init_prep_date"] = pd.to_datetime( DREAMS_MASTERSHEET.last_initiation_prep_date,errors='coerce')
 
 DREAMS_MASTERSHEET.last_hiv_test_date = DREAMS_MASTERSHEET.last_hiv_test_date.fillna('0000-00-00')
 DREAMS_MASTERSHEET["hts_date"] = pd.to_datetime( DREAMS_MASTERSHEET.last_hiv_test_date,errors='coerce')
 
-DREAMS_MASTERSHEET.last_sensibilisation_hiv_test_date = DREAMS_MASTERSHEET.last_sensibilisation_hiv_test_date.fillna('0000-00-00')
-DREAMS_MASTERSHEET["sens_hts_date"] = pd.to_datetime( DREAMS_MASTERSHEET.last_sensibilisation_hiv_test_date,errors='coerce')
+#DREAMS_MASTERSHEET.last_sensibilisation_hiv_test_date = DREAMS_MASTERSHEET.last_sensibilisation_hiv_test_date.fillna('0000-00-00')
+#DREAMS_MASTERSHEET["sens_hts_date"] = pd.to_datetime( DREAMS_MASTERSHEET.last_sensibilisation_hiv_test_date,errors='coerce')
 
 
 DREAMS_MASTERSHEET.last_condoms_reception_date = DREAMS_MASTERSHEET.last_condoms_reception_date.fillna('0000-00-00')
@@ -172,13 +172,13 @@ DREAMS_MASTERSHEET['curriculum_date_debut_fy'] = DREAMS_MASTERSHEET.curriculum_d
 DREAMS_MASTERSHEET['curriculum_date_end_fy'] = DREAMS_MASTERSHEET.curriculum_date_end.map(id_quarter_services)
 
 DREAMS_MASTERSHEET['hts_fy'] = DREAMS_MASTERSHEET.hts_date.map(id_quarter_services)
-DREAMS_MASTERSHEET['sens_hts_fy'] = DREAMS_MASTERSHEET.sens_hts_date.map(id_quarter_services)
+#DREAMS_MASTERSHEET['sens_hts_fy'] = DREAMS_MASTERSHEET.sens_hts_date.map(id_quarter_services)
 DREAMS_MASTERSHEET['condoms_fy'] = DREAMS_MASTERSHEET.condoms_date.map(id_quarter_services)
 DREAMS_MASTERSHEET['vbg_fy'] = DREAMS_MASTERSHEET.vbg_date.map(id_quarter_services)
 DREAMS_MASTERSHEET['gyneco_fy'] = DREAMS_MASTERSHEET.gyneco_date.map(id_quarter_services)
-DREAMS_MASTERSHEET['init_prep_fy'] = DREAMS_MASTERSHEET.init_prep_date.map(id_quarter_services)
-DREAMS_MASTERSHEET['ref_prep_fy'] = DREAMS_MASTERSHEET.ref_prep_date.map(id_quarter_services)
-DREAMS_MASTERSHEET['sens_prep_fy'] = DREAMS_MASTERSHEET.sens_prep_date.map(id_quarter_services)
+#DREAMS_MASTERSHEET['init_prep_fy'] = DREAMS_MASTERSHEET.init_prep_date.map(id_quarter_services)
+#DREAMS_MASTERSHEET['ref_prep_fy'] = DREAMS_MASTERSHEET.ref_prep_date.map(id_quarter_services)
+#DREAMS_MASTERSHEET['sens_prep_fy'] = DREAMS_MASTERSHEET.sens_prep_date.map(id_quarter_services)
 
 DREAMS_MASTERSHEET.number_of_different_topic = DREAMS_MASTERSHEET.number_of_different_topic.fillna(-1000)
 DREAMS_MASTERSHEET.number_of_different_topic = DREAMS_MASTERSHEET.number_of_different_topic.astype(int16)
@@ -186,38 +186,37 @@ DREAMS_MASTERSHEET['curriculum_servis_auMoins_1fois'] = DREAMS_MASTERSHEET.numbe
 DREAMS_MASTERSHEET['curriculum'] = DREAMS_MASTERSHEET.number_of_different_topic.map(status_curriculum)
 DREAMS_MASTERSHEET["dreams_curriculum"] = DREAMS_MASTERSHEET.curriculum.map(curriculum_condense)
 
-DREAMS_MASTERSHEET.acceptation_hiv_test = DREAMS_MASTERSHEET.acceptation_hiv_test.fillna("didnt")
-DREAMS_MASTERSHEET.sensibilisation_condom = DREAMS_MASTERSHEET.sensibilisation_condom.fillna("didnt")
-DREAMS_MASTERSHEET.acceptation_condom = DREAMS_MASTERSHEET.acceptation_condom.fillna("didnt")
-DREAMS_MASTERSHEET.acceptation_prep = DREAMS_MASTERSHEET.acceptation_prep.fillna("didnt")
+#DREAMS_MASTERSHEET.acceptation_hiv_test = DREAMS_MASTERSHEET.acceptation_hiv_test.fillna("didnt")
+#DREAMS_MASTERSHEET.sensibilisation_condom = DREAMS_MASTERSHEET.sensibilisation_condom.fillna("didnt")
+#DREAMS_MASTERSHEET.acceptation_condom = DREAMS_MASTERSHEET.acceptation_condom.fillna("didnt")
+#DREAMS_MASTERSHEET.acceptation_prep = DREAMS_MASTERSHEET.acceptation_prep.fillna("didnt")
 
 
-DREAMS_MASTERSHEET["acc_hiv_test"] = DREAMS_MASTERSHEET.acceptation_hiv_test.map(acceptation_services)
-DREAMS_MASTERSHEET["sens_condom"] = DREAMS_MASTERSHEET.sensibilisation_condom.map(sensibilisation_services)
-DREAMS_MASTERSHEET["acc_condom"] = DREAMS_MASTERSHEET.acceptation_condom.map(acceptation_services)
-DREAMS_MASTERSHEET["acc_prep"] = DREAMS_MASTERSHEET.acceptation_prep.map(acceptation_services)
+#DREAMS_MASTERSHEET["acc_hiv_test"] = DREAMS_MASTERSHEET.acceptation_hiv_test.map(acceptation_services)
+#DREAMS_MASTERSHEET["sens_condom"] = DREAMS_MASTERSHEET.sensibilisation_condom.map(sensibilisation_services)
+#DREAMS_MASTERSHEET["acc_condom"] = DREAMS_MASTERSHEET.acceptation_condom.map(acceptation_services)
+#DREAMS_MASTERSHEET["acc_prep"] = DREAMS_MASTERSHEET.acceptation_prep.map(acceptation_services)
 
 DREAMS_MASTERSHEET['hts'] = DREAMS_MASTERSHEET.hts_date.map(valid_services)
-DREAMS_MASTERSHEET['sens_hts'] = DREAMS_MASTERSHEET.sens_hts_date.map(valid_services)
+#DREAMS_MASTERSHEET['sens_hts'] = DREAMS_MASTERSHEET.sens_hts_date.map(valid_services)
 DREAMS_MASTERSHEET['condoms'] = DREAMS_MASTERSHEET.condoms_date.map(valid_services)
-DREAMS_MASTERSHEET['new_condoms'] = DREAMS_MASTERSHEET.apply(lambda df: condoms_services(df),axis=1)
+#DREAMS_MASTERSHEET['new_condoms'] = DREAMS_MASTERSHEET.apply(lambda df: condoms_services(df),axis=1)
 DREAMS_MASTERSHEET['vbg'] = DREAMS_MASTERSHEET.vbg_date.map(valid_services)
 DREAMS_MASTERSHEET['gyneco'] = DREAMS_MASTERSHEET.gyneco_date.map(valid_services)
-DREAMS_MASTERSHEET['init_prep'] = DREAMS_MASTERSHEET.init_prep_date.map(valid_services)
-DREAMS_MASTERSHEET['ref_prep'] = DREAMS_MASTERSHEET.ref_prep_date.map(valid_services)
-DREAMS_MASTERSHEET['sens_prep'] = DREAMS_MASTERSHEET.sens_prep_date.map(valid_services)
+#DREAMS_MASTERSHEET['init_prep'] = DREAMS_MASTERSHEET.init_prep_date.map(valid_services)
+#DREAMS_MASTERSHEET['ref_prep'] = DREAMS_MASTERSHEET.ref_prep_date.map(valid_services)
+#DREAMS_MASTERSHEET['sens_prep'] = DREAMS_MASTERSHEET.sens_prep_date.map(valid_services)
 
 DREAMS_MASTERSHEET['socio_eco_app'] = DREAMS_MASTERSHEET.apply(lambda df: socioEco_app(df),axis=1)
 DREAMS_MASTERSHEET['post_care_treatment'] = DREAMS_MASTERSHEET.apply(lambda df: post_care_app(df),axis=1)
 
 DREAMS_MASTERSHEET['score_eligible_AGYW'] = DREAMS_MASTERSHEET.total.map(isAGYW)
 
-DREAMS_MASTERSHEET['recevoir_1services'] = DREAMS_MASTERSHEET.apply(lambda df: new_unServiceDreams(df),axis=1)
+DREAMS_MASTERSHEET['recevoir_1services'] = DREAMS_MASTERSHEET.apply(lambda df: unServiceDreams(df),axis=1)
 
 DREAMS_MASTERSHEET['ps_10_14'] = DREAMS_MASTERSHEET.apply(lambda df: service_primaire_10_14(df),axis=1)
-DREAMS_MASTERSHEET['ps_15_19'] = DREAMS_MASTERSHEET.apply(lambda df: new_service_primaire_15_19(df), axis=1)
-DREAMS_MASTERSHEET['ps_20_24'] = DREAMS_MASTERSHEET.apply(lambda df: newI_service_primaire_20_24(df), axis=1)
-
+DREAMS_MASTERSHEET['ps_15_19'] = DREAMS_MASTERSHEET.apply(lambda df: service_primaire_15_19(df), axis=1)
+DREAMS_MASTERSHEET['ps_20_24'] = DREAMS_MASTERSHEET.apply(lambda df: service_primaire_20_24(df), axis=1)
 
 
 
