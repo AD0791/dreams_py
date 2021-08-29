@@ -124,7 +124,7 @@ DREAMS_MASTERSHEET = pd.read_sql_query(query,engine,parse_dates=True)
 engine.dispose()
 """
 
-DREAMS_MASTERSHEET = pd.read_excel('../../no_Q2_data.xlsx',parse_dates=True)
+DREAMS_MASTERSHEET = pd.read_excel('../../static/no_Q2_data.xlsx',parse_dates=True)
 
 DREAMS_MASTERSHEET.age = DREAMS_MASTERSHEET.age.fillna(-1000)
 DREAMS_MASTERSHEET.age = DREAMS_MASTERSHEET.age.astype(int16)
