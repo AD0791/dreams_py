@@ -127,11 +127,11 @@ engine.dispose()
 #DREAMS_MASTERSHEET = pd.read_excel('../../static/Q2FY21.xlsx',sheet_name='Q2',parse_dates=True)
 
 Q2DATA = pd.read_excel('../../static/Q2FY21.xlsx',sheet_name='Q2',parse_dates=True)
-Q1DATA = pd.read_excel('../core/Q1FY21.xlsx',sheet_name='Q1',parse_dates=True)
-Q1Code = Q1DATA[['code']]
-no_Q1_data = Q2DATA[~Q2DATA.code.isin(Q1Code.code)]
+#Q1DATA = pd.read_excel('../core/Q1FY21.xlsx',sheet_name='Q1',parse_dates=True)
+#Q1Code = Q1DATA[['code']]
+#no_Q1_data = Q2DATA[~Q2DATA.code.isin(Q1Code.code)]
 
-DREAMS_MASTERSHEET= no_Q1_data
+DREAMS_MASTERSHEET= Q2DATA
 
 
 

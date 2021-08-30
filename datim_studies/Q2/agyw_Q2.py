@@ -34,9 +34,9 @@ class AgywPrev:
         self.__data =  DREAMS_MASTERSHEET
         self. __total_mastersheet = self.__data.code.count()
         if self.__commune == None:
-            self.__dreams_valid = self.__data[(self.__data.age_range !="not_valid_age") & (self.__data.age_range != "25-29") & (self.__data.timeOn_system == "required_Time_on")]
+            self.__dreams_valid = self.__data
         else:
-            self.__dreams_valid = self.__data[(self.__data.age_range !="not_valid_age") & (self.__data.age_range != "25-29") & (self.__data.timeOn_system == "required_Time_on")&(self.__data.actual_commune == f"{self.__commune}")]
+            self.__dreams_valid = self.__data[(self.__data.actual_commune == f"{self.__commune}")]
         self.__total_dreams_valid = self.__dreams_valid.code.count()
         self.__dreams_valid["primary_only"] = self.__dreams_valid.apply(lambda df: self.__primFunc(df),axis=1)
         self.__dreams_valid["primary_and_OneSecondary_services"] = self.__dreams_valid.apply(lambda df: self.__primLeastOneSecFunc(df),axis=1)
@@ -97,10 +97,10 @@ class AgywPrev:
             return "invalid"
         
     def __primPartFunc(self,df):
-        if (df.age_range == "15-19") and ( (df.condoms == "tested_on_given_date" and df.dreams_curriculum == "curriculum_inc") or (df.condoms == "errata" and df.dreams_curriculum == "curriculum_completed")): 
+        if (df.age_range == "15-19") and  ((df.condoms == "tested_on_given_date" and df.dreams_curriculum == "curriculum_inc") or (df.condoms == "errata" and df.dreams_curriculum == "curriculum_completed")): 
         #if (df.age_range == "15-19") and ((df.new_condoms == "sensOuRecu" and df.dreams_curriculum == "curriculum_inc") or (df.new_condoms == "no" and df.dreams_curriculum == "curriculum_completed")): 
             return "primary_part_services"
-        elif (df.age_range == "20-24") and (((df.dreams_curriculum == "curriculum_completed" and df.condoms=="errata" and df.hts=="errata")or(df.dreams_curriculum == "curriculum_completed" and df.condoms=="tested_on_given_date" and df.hts=="errata")or(df.dreams_curriculum == "curriculum_completed" and df.condoms=="errata" and df.hts=="tested_on_given_date"))or((df.dreams_curriculum == "curriculum_inc" and df.condoms=="tested_on_given_date" and df.hts=="errata")or(df.dreams_curriculum == "curriculum_inc" and df.condoms=="errata" and df.hts=="tested_on_given_date")or(df.dreams_curriculum == "curriculum_inc" and df.condoms=="tested_on_given_date" and df.hts=="tested_on_given_date"))):
+        elif (df.age_range == "20-24") and (((df.dreams_curriculum == "curriculum_completed" and df.condoms=="errata" and df.hts=="errata") or (df.dreams_curriculum == "curriculum_completed" and df.condoms=="tested_on_given_date" and df.hts=="errata")or(df.dreams_curriculum == "curriculum_completed" and df.condoms=="errata" and df.hts=="tested_on_given_date"))or((df.dreams_curriculum == "curriculum_inc" and df.condoms=="tested_on_given_date" and df.hts=="errata")or(df.dreams_curriculum == "curriculum_inc" and df.condoms=="errata" and df.hts=="tested_on_given_date")or(df.dreams_curriculum == "curriculum_inc" and df.condoms=="tested_on_given_date" and df.hts=="tested_on_given_date"))) :
         #elif (df.age_range == "20-24") and ((df.new_condoms == "sensOuRecu" and df.dreams_curriculum == "curriculum_inc") or (df.new_condoms == "no" and df.dreams_curriculum == "curriculum_completed")):
             return "primary_part_services"
         else:
@@ -136,12 +136,12 @@ class AgywPrev:
 
     __PERIOD_DATIM = sorted(list(DREAMS_MASTERSHEET.agyw_period_range.unique()))
     __PERIOD_DATIM.append("Total")
-    __AGE_DATIM = sorted(list(DREAMS_MASTERSHEET.age_range.unique())[1:4])
+    __AGE_DATIM = sorted(list(DREAMS_MASTERSHEET.age_range.unique()))
     def datim_agyw_prevI(self):
         
         try:
             pivotableI = self.__agyw_prevI.rename(columns={"age_range":"Age", "agyw_period_range":"Time"})
-            agyw_prevI_pivot = pivotableI.pivot_table(index="Age",columns="Time", values="code",aggfunc="count",fill_value=0,margins=True,margins_name="Total",dropna=False)[:-1]
+            agyw_prevI_pivot = pivotableI.pivot_table(index="Age",columns="Time", values="code",aggfunc="count",fill_value=0,margins=True,margins_name="Total",dropna=False)
             columns_pivotI = list(agyw_prevI_pivot.columns)
             indexes_pivotI = list(agyw_prevI_pivot.index)
             for period in AgywPrev.__PERIOD_DATIM:
@@ -167,7 +167,7 @@ class AgywPrev:
     def datim_agyw_prevII(self):
         try:
             pivotableII = self.__agyw_prevII.rename(columns={"age_range":"Age", "agyw_period_range":"Time"})
-            agyw_prevII_pivot = pivotableII.pivot_table(index="Age",columns="Time", values="code",aggfunc="count",fill_value=0,margins=True,margins_name="Total",dropna=False)[:-1]
+            agyw_prevII_pivot = pivotableII.pivot_table(index="Age",columns="Time", values="code",aggfunc="count",fill_value=0,margins=True,margins_name="Total",dropna=False)
             columns_pivotII = list(agyw_prevII_pivot.columns)
             indexes_pivotII = list(agyw_prevII_pivot.index)
             for period in AgywPrev.__PERIOD_DATIM:
@@ -193,7 +193,7 @@ class AgywPrev:
     def datim_agyw_prevIII(self):
         try:
             pivotableIII = self.__agyw_prevIII.rename(columns={"age_range":"Age", "agyw_period_range":"Time"})
-            agyw_prevIII_pivot = pivotableIII.pivot_table(index="Age",columns="Time", values="code",aggfunc="count",fill_value=0,margins=True,margins_name="Total",dropna=False)[:-1]
+            agyw_prevIII_pivot = pivotableIII.pivot_table(index="Age",columns="Time", values="code",aggfunc="count",fill_value=0,margins=True,margins_name="Total",dropna=False)
             columns_pivotIII = list(agyw_prevIII_pivot.columns)
             indexes_pivotIII = list(agyw_prevIII_pivot.index)
             for period in AgywPrev.__PERIOD_DATIM:
@@ -214,7 +214,7 @@ class AgywPrev:
                 "25+ months":[0,0,0],
                 "Total":[0,0,0]
             })
-        return agyw_prevIII_results_final    
+        return agyw_prevIII_results_final
     
     
 class AgywPrevCommune(AgywPrev):
