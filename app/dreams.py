@@ -213,7 +213,7 @@ dreams_mastersheet['ps_10_14'] = dreams_mastersheet.apply(lambda df: service_pri
 dreams_mastersheet['ps_15_19'] = dreams_mastersheet.apply(lambda df: new_service_primaire_15_19(df), axis=1)
 dreams_mastersheet['ps_20_24'] = dreams_mastersheet.apply(lambda df: newI_service_primaire_20_24(df), axis=1)
 
-dreams_mastersheet.to_excel("los.xlsx",parse_dates=True,index=False,na_rep='NULL')
+dreams_mastersheet.to_excel("los.xlsx",index=False,na_rep='NULL')
 
 
 
