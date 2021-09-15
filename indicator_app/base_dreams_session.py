@@ -64,6 +64,7 @@ FROM
     left join dream_member dm on dm.id_patient=a.id_patient
     left join dreams_surveys_data dsd  on dsd.case_id=dm.case_id
 group by a.id_patient
+having number_of_different_topic_for_inter>=1
 '''
 # -- having number_of_different_topic_for_inter>=1
 
@@ -102,15 +103,7 @@ FROM
     muso_group_members mgm ON mgm.id_patient = dm.id_patient
         LEFT JOIN
     gardening_beneficiary gb ON gb.code_dreams = p.patient_code
-WHERE
-    ((dhi.test_date BETWEEN '{Set_date.start_date.value}' AND '{Set_date.start_date.value}')
-        OR (dhi.condoms_reception_date BETWEEN '{Set_date.start_date.value}' AND '{Set_date.start_date.value}')
-        OR (dhi.vbg_treatment_date BETWEEN '{Set_date.start_date.value}' AND '{Set_date.start_date.value}')
-        OR (dhi.gynecological_care_date BETWEEN '{Set_date.start_date.value}' AND '{Set_date.start_date.value}')
-        OR (dhi.prep_initiation_date BETWEEN '{Set_date.start_date.value}' AND '{Set_date.start_date.value}')
-        OR (dhi.has_been_sensibilize_for_condom = 1)
-        OR (gb.case_id IS NOT NULL)
-        OR (mgm.id_patient IS NOT NULL))
+WHERE ((dhi.test_date BETWEEN '{Set_date.start_date.value}' AND '{Set_date.end_date.value}') OR (dhi.condoms_reception_date BETWEEN '{Set_date.start_date.value}' AND '{Set_date.end_date.value}') OR (dhi.vbg_treatment_date BETWEEN '{Set_date.start_date.value}' AND '{Set_date.end_date.value}') OR (dhi.gynecological_care_date BETWEEN '{Set_date.start_date.value}' AND '{Set_date.end_date.value}') OR (dhi.prep_initiation_date BETWEEN '{Set_date.start_date.value}' AND '{Set_date.end_date.value}') OR (dhi.has_been_sensibilize_for_condom = 1) OR (gb.case_id IS NOT NULL) OR (mgm.id_patient IS NOT NULL))
 """
 
 query_mastersheet= """
@@ -216,12 +209,6 @@ FROM
     gardening_beneficiary gb ON gb.code_dreams = p.patient_code
 GROUP BY dm.id_patient
 """
-
-
-
-
-
-
 
 
 agyw_service_session = pd.read_sql_query(query_agyw_service_session,engine,parse_dates=True)
