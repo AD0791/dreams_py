@@ -478,45 +478,9 @@ FROM
     LEFT JOIN lookup_departement ld ON ld.id = lc.departement) g ON a.id_patient = g.id_patient
 """
 
-
-
-agyw_served_period = pd.read_sql_query(query_period,engine,parse_dates=True)
-agyw_served_past = pd.read_sql_query(query_past,engine,parse_dates=True)
-agyw_served = pd.read_sql_query(query_master,engine,parse_dates=True)
-
-# close the pool of connection
-engine.dispose()
-
-
-agyw_served_period.to_excel('agyw_served_period.xlsx',index=False,na_rep="NULL")
-agyw_served_past.to_excel('agyw_served_past.xlsx',index=False,na_rep="NULL")
-agyw_served.to_excel('agyw_served.xlsx',index=False,na_rep="NULL")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#### option route
-
-
-"""
-query_mastersheet= 
+query_mastersheet= """
 SELECT 
-    dm.id_patient AS main_id,
+    dm.id_patient as id_patient,
     IF(TIMESTAMPDIFF(YEAR,
             dsd.nan_ki_dat_ou_fet,
             NOW()) >= 18,
@@ -616,6 +580,35 @@ FROM
         LEFT JOIN
     gardening_beneficiary gb ON gb.code_dreams = p.patient_code
 GROUP BY dm.id_patient
+"""
+
+
+
+agyw_served_period = pd.read_sql_query(query_period,engine,parse_dates=True)
+agyw_served_past = pd.read_sql_query(query_past,engine,parse_dates=True)
+agyw_served = pd.read_sql_query(query_master,engine,parse_dates=True)
+mastersheet_served = pd.read_sql_query(query_mastersheet,engine,parse_dates=True)
+
+# close the pool of connection
+engine.dispose()
+
+
+agyw_served_period.to_excel('agyw_served_period.xlsx',index=False,na_rep="")
+agyw_served_past.to_excel('agyw_served_past.xlsx',index=False,na_rep="")
+agyw_served.to_excel('agyw_served.xlsx',index=False,na_rep="")
+mastersheet_served.to_excel('agyw_served.xlsx',index=False,na_rep="")
+
+
+
+
+
+
+
+#### option route
+
+
+"""
+
 
 
 
