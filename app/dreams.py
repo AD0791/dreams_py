@@ -71,9 +71,7 @@ SELECT
         'no') AS is_muso,
     IF(gb.case_id IS NOT NULL, 'yes', 'no') AS is_gardening,
     tf.*,
-    dsd.total AS score,
-    dsd.a1_dat_entvyou_a_ft_jjmmaa_egz_010817 AS enrollement_date,
-    dsd.organisation
+    dsd.*
 FROM
     dream_member dm
         LEFT JOIN
