@@ -131,3 +131,13 @@ dmypy.json
 #no excel
 *.xlsx
 dreams_services.xlsx
+
+# dstore
+.Dstore
+.DStore
+
+
+
+
+
+
