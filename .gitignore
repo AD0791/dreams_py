@@ -133,9 +133,7 @@ dmypy.json
 dreams_services.xlsx
 
 # dstore
-.Dstore
-.DStore
-
+.DS_Store
 
 
 
