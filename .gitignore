@@ -135,7 +135,7 @@ dreams_services.xlsx
 # dstore
 .DS_Store
 
-
+*.env
 
 
 
