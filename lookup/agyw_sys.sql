@@ -1,11 +1,12 @@
 SELECT 
     d.case_id,
+    dm.id_patient as id_patient,
     p.patient_code AS code,
     d.a_non_patisipan_an AS first_name,
     d.b_siyati AS last_name,
     TIMESTAMPDIFF(YEAR,
         d.nan_ki_dat_ou_fet,
-        d.a1_dat_entvyou_a_ft_jjmmaa_egz_010817) AS age,
+        now()) AS age,
     d.nan_ki_dat_ou_fet AS dob,
     d.a1_dat_entvyou_a_ft_jjmmaa_egz_010817 AS interview_date,
     d.e__telefn,
