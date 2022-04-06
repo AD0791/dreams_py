@@ -111,7 +111,6 @@ garden = gbd_code[
         'gps',
         'beneficiary_type'
     ]
-
 ]
 garden_clean  = garden.drop_duplicates(subset=['code_dreams'])
 
