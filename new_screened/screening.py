@@ -1,17 +1,18 @@
 import pymysql
 from sqlalchemy import create_engine
-from decouple import config 
+from decouple import config
 from dotenv import load_dotenv
 from pandas import read_sql_query, Int32Dtype, to_datetime
 
 load_dotenv()
-## get the environment variables needed
-USER= config('USRCaris')
-PASSWORD= config('PASSCaris')
-HOSTNAME= config('HOSTCaris')
-DBNAME= config('DBCaris')
-## get the engine to connect and fetch
-engine = create_engine(f"mysql+pymysql://{USER}:{PASSWORD}@{HOSTNAME}/{DBNAME}")
+# get the environment variables needed
+USER = config('USRCaris')
+PASSWORD = config('PASSCaris')
+HOSTNAME = config('HOSTCaris')
+DBNAME = config('DBCaris')
+# get the engine to connect and fetch
+engine = create_engine(
+    f"mysql+pymysql://{USER}:{PASSWORD}@{HOSTNAME}/{DBNAME}")
 
 _sdata_query = f"""
 SELECT 
@@ -65,20 +66,15 @@ FROM
     lookup_departement ld ON ld.id = lc.departement
 """
 
-sdata = read_sql_query(_sdata_query, engine,parse_dates=True)
+sdata = read_sql_query(_sdata_query, engine, parse_dates=True)
 
 engine.dispose()
 
 
-#### EDA
+# EDA
 
 sdata.id_patient = sdata.id_patient.astype(Int32Dtype())
 sdata.code = sdata.code.fillna('---')
-to_be_served = sdata[sdata.code=='---']
-to_be_served.interview_date = to_be_served.loc[:,'interview_date'].apply(to_datetime)
-
-
-
-
-
-
+to_be_served = sdata[sdata.code == '---']
+to_be_served.interview_date = to_be_served.loc[:, 'interview_date'].apply(
+    to_datetime)
