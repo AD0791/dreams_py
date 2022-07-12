@@ -4,7 +4,6 @@ from decouple import config
 from dotenv import load_dotenv
 from pandas import read_sql_query, Int32Dtype
 
-from core import GARDENING_SERVED
 
 load_dotenv()
 # get the environment variables needed
