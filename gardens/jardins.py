@@ -81,5 +81,10 @@ sdata = sdata[sdata.total >= 14]
 
 gbd = read_sql_query(_query, engine, parse_dates=True)
 gbd.fillna("---", inplace=True)
+gbd['is_code_valid'] = gbd.code_dreams.str.fullmatch(
+    "^(GON|KAP|PAP)/DRMS/(\d{9})$")
+
+gbd.to_excel('./allgarden.xlsx', na_rep="", index=False)
+
 
 engine.dispose()
