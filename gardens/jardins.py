@@ -3,7 +3,7 @@ from sqlalchemy import create_engine
 from decouple import config
 from dotenv import load_dotenv
 from pandas import read_sql_query, Int32Dtype
-
+from numpy import nan
 
 load_dotenv()
 # get the environment variables needed
@@ -80,6 +80,7 @@ sdata.id_patient = sdata.id_patient.astype(Int32Dtype())
 sdata = sdata[sdata.total >= 14]
 
 gbd = read_sql_query(_query, engine, parse_dates=True)
+gbd.replace(r'^\s*$', nan, regex=True, inplace=True)
 gbd.fillna("---", inplace=True)
 gbd['is_code_valid'] = gbd.code_dreams.str.fullmatch(
     "^(GON|KAP|PAP)/DRMS/(\d{9})$")

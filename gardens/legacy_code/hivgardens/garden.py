@@ -3,6 +3,7 @@ from sqlalchemy import create_engine
 from decouple import config
 from dotenv import load_dotenv
 from pandas import read_sql_query
+from numpy import nan
 
 from static.datim_fy22.agyw import AgywPrev
 
@@ -87,8 +88,8 @@ FROM
 
 sdata = read_sql_query(_sdata_query, engine, parse_dates=True)
 gbd = read_sql_query(_query, engine, parse_dates=True)
+gbd.replace(r'^\s*$', nan, regex=True)
 gbd.fillna("---", inplace=True)
-gbd.code_dreams = gbd.code_dreams.fillna("---")
 
 engine.dispose()
 
