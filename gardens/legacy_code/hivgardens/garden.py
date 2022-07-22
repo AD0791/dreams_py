@@ -1,6 +1,6 @@
 import pymysql
 from sqlalchemy import create_engine
-from decouple import config 
+from decouple import config
 from dotenv import load_dotenv
 from pandas import read_sql_query
 
@@ -10,18 +10,19 @@ from static.datim_fy22.agyw import AgywPrev
 _datim = AgywPrev()
 _base = _datim.data_dreams_valid
 gardening = _base[
-    (_base.gardening=="yes")
+    (_base.gardening == "yes")
 ]
 
 
 load_dotenv()
-## get the environment variables needed
-USER= config('USRCaris')
-PASSWORD= config('PASSCaris')
-HOSTNAME= config('HOSTCaris')
-DBNAME= config('DBCaris')
-## get the engine to connect and fetch
-engine = create_engine(f"mysql+pymysql://{USER}:{PASSWORD}@{HOSTNAME}/{DBNAME}")
+# get the environment variables needed
+USER = config('USRCaris')
+PASSWORD = config('PASSCaris')
+HOSTNAME = config('HOSTCaris')
+DBNAME = config('DBCaris')
+# get the engine to connect and fetch
+engine = create_engine(
+    f"mysql+pymysql://{USER}:{PASSWORD}@{HOSTNAME}/{DBNAME}")
 
 
 _query = f'''
@@ -84,16 +85,17 @@ FROM
     lookup_departement ld ON ld.id = lc.departement
 """
 
-sdata = read_sql_query(_sdata_query, engine,parse_dates=True)
-gbd = read_sql_query(_query,engine,parse_dates=True)
-gbd.fillna("---",inplace=True)
+sdata = read_sql_query(_sdata_query, engine, parse_dates=True)
+gbd = read_sql_query(_query, engine, parse_dates=True)
+gbd.fillna("---", inplace=True)
+gbd.code_dreams = gbd.code_dreams.fillna("---")
 
 engine.dispose()
 
-#### EDA
+# EDA
 
 gbd['code'] = gbd.code_dreams.str.fullmatch("^[A-Z]{3}/DRMS/(\d{9})$")
-gbd_code = gbd[gbd.code==True]
+gbd_code = gbd[gbd.code == True]
 garden = gbd_code[
     [
         'case_id',
@@ -112,8 +114,4 @@ garden = gbd_code[
         'beneficiary_type'
     ]
 ]
-garden_clean  = garden.drop_duplicates(subset=['code_dreams'])
-
-
-
-
+garden_clean = garden.drop_duplicates(subset=['code_dreams'])
