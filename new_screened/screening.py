@@ -1,3 +1,4 @@
+from numpy import nan
 import pymysql
 from sqlalchemy import create_engine
 from decouple import config
