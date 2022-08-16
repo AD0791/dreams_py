@@ -73,7 +73,7 @@ engine.dispose()
 
 
 # EDA
-
+sdata.replace(r'^\s*$', nan, regex=True, inplace=True)
 sdata.id_patient = sdata.id_patient.astype(Int32Dtype())
 sdata.code = sdata.code.fillna('---')
 to_be_served = sdata[sdata.code == '---']
