@@ -81,3 +81,4 @@ to_be_served.interview_date = to_be_served.loc[:, 'interview_date'].apply(
     to_datetime)
 to_be_served.total = to_be_served.total.astype(Int32Dtype())
 to_be_served = to_be_served[to_be_served.total >= 14]
+
