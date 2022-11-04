@@ -5,6 +5,7 @@ from decouple import config
 from dotenv import load_dotenv
 from pandas import read_sql_query, Int32Dtype, to_datetime
 
+
 load_dotenv()
 # get the environment variables needed
 USER = config('USRCaris')
@@ -74,11 +75,21 @@ engine.dispose()
 
 # EDA
 sdata.replace(r'^\s*$', nan, regex=True, inplace=True)
+
 sdata.id_patient = sdata.id_patient.astype(Int32Dtype())
 sdata.code = sdata.code.fillna('---')
+sdata.interview_date = sdata.loc[:, 'interview_date'].apply(
+    to_datetime)
+
 to_be_served = sdata[sdata.code == '---']
 to_be_served.interview_date = to_be_served.loc[:, 'interview_date'].apply(
     to_datetime)
 to_be_served.total = to_be_served.total.astype(Int32Dtype())
 to_be_served = to_be_served[to_be_served.total >= 14]
 
+eligible = sdata[sdata.total >= 14]
+
+served = sdata[
+    (sdata.code != '---')&
+    (sdata.total>=14)
+]
