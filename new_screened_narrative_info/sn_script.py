@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 from pandas import read_sql_query, Int32Dtype, to_datetime
 
 
-load_dotenv()
+load_dotenv("../old_caris_host.env")
 # get the environment variables needed
 USER = config('USRCaris')
 PASSWORD = config('PASSCaris')
